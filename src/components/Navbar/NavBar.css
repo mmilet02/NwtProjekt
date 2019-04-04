@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgb(44, 139, 139);
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.m {
+  width: 40%;
+}
