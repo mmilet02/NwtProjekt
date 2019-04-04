@@ -14,7 +14,9 @@ class App extends Component {
     return (
       <Router>
         <div className="main_container">
+
           <Navbar />
+
           <div className="content">
             <Route exact path="/" component={HomePage} />
             <Route exact path="/profile" component={Profile} />

@@ -4,9 +4,9 @@ import "./Footer.css";
 export class Footer extends Component {
   render() {
     return (
-      <footer>
+      <div className="footer">
         <p>FOOTER IDIOT</p>
-      </footer>
+      </div>
     );
   }
 }

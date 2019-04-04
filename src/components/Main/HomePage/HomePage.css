@@ -1,0 +1,23 @@
+.header_container{
+    background-image: url("../../../images/header_background.jpg");
+    width:100%;
+}
+.img_container{
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+height: 150px;
+}
+.pic{
+    width: 15%;
+    height: 100%;
+}
+
+.pic img{
+    height: 100%;
+    width: 100%;
+}
+h1{
+    margin-left: 600px;
+}

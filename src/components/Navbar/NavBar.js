@@ -16,26 +16,26 @@ class Navbar extends Component {
           <Link to="/">Logo</Link>
         </div>
         <nav>
-          <div>
+          <div className=" header mm">
             <Link to="/trips">Trips</Link>
           </div>
           {this.state.isLoggedIn ? (
-            <div className="header m">
+            <div className="header m ">
               <div>
                 <Link to="/profile">Profile</Link>
               </div>
-              <div>Logout</div>
+              <div >Logout</div>
             </div>
           ) : (
-            <div className="header m">
-              <div>
-                <Link to="/login">Login</Link>
+              <div className="header m">
+                <div>
+                  <Link to="/login">Login</Link>
+                </div>
+                <div>
+                  <Link to="/register">Register</Link>
+                </div>
               </div>
-              <div>
-                <Link to="/register">Register</Link>
-              </div>
-            </div>
-          )}
+            )}
         </nav>
       </header>
     );
