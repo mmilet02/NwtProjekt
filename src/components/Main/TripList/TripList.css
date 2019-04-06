@@ -1,0 +1,32 @@
+.filter{
+width:100%;
+height: 300px;
+background-color: gray;
+}
+
+.trips_heading{
+
+    width:100%;
+    text-align: center;
+
+}
+.trips{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.trip{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:180px;
+    height: 150px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 40px;
+    background-color: gray;
+    border-radius: 5%;
+}
