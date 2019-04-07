@@ -1,0 +1,15 @@
+p{
+    font-weight: 700;
+}
+
+.register_form{
+
+    width: 85%;
+    height: 500px;
+    background-color: gray;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
