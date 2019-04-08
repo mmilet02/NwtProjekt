@@ -1,22 +1,25 @@
-p{
-    font-weight: 700;
+p {
+  font-weight: 700;
 }
 
-.header_container{
-    width:100%;
+.header_container {
+  width: 100%;
 }
-.header_container img{
-    width:100%;
+.header_container img {
+  width: 100%;
 }
 
-.login_form{
-
-    width: 85%;
-    height: 500px;
-    background-color: gray;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+.login_form {
+  width: 85%;
+  height: 500px;
+  background-color: gray;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
 }

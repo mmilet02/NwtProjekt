@@ -3,18 +3,24 @@
     "trip_id": "1",
     "name": "First Trip",
     "description": "This is the first trip in json folder",
-    "location": "Split"
+    "location": "Split",
+    "price": "9.99",
+    "image": "1.jpeg"
   },
   {
     "trip_id": "2",
     "name": "Second Trip",
     "description": "This is the Second trip in json folder",
-    "location": "Zagreb"
+    "location": "Zagreb",
+    "price": "9.99",
+    "image": "2.jpeg"
   },
   {
     "trip_id": "3",
     "name": "Third Trip",
     "description": "This is the Third trip in json folder",
-    "location": "Zadar"
+    "location": "Zadar",
+    "price": "9.99",
+    "image": "3.jpeg"
   }
 ]
