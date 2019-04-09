@@ -22,45 +22,73 @@ export class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h1>REGISTER</h1>
-        <h3>Alredy have an account?</h3>
-        <div>
-          <Link to="/login">Login</Link>
-        </div>
-        <div className="register_form">
-          <form className="register_form">
-            <label>
-              Email
-              <input
-                type="email"
-                placeholder="email"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Username
-              <input
-                type="text"
-                placeholder="username"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Password
-              <input
-                type="password"
-                placeholder="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-          </form>
+      <div className="register_page">
+        <div className="login_form">
+          <h1>Register form:</h1>
+          <div className="form_wrapper">
+            <form className="form">
+              <label>
+                <input
+                  className="userInput"
+                  type="text"
+                  placeholder="Name"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input
+                  className="userInput"
+                  type="text"
+                  placeholder="Surname"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input
+                  className="userInput"
+                  type="text"
+                  placeholder="Enter your email"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input
+                  className="userInput"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input
+                  className="userInput"
+                  type="password"
+                  placeholder="Repeat password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input className="checkbox" type="checkbox" /> I have read and
+                accept the terms of use
+              </label>
+              <button className="login_button">REGISTER</button>
+              <div className="signup">
+                <Link to="/login" className="signup">
+                  Already a member? Login !
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

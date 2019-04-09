@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./HomePage.css";
-import home_img from "../../../images/header_background.jpg";
-import transfer from "../../../images/transfer.jpg";
+import home_img from "../../../imagess/header_background.jpg";
+import transfer from "../../../imagess/transfer.jpg";
 
 export class HomePage extends Component {
   constructor() {

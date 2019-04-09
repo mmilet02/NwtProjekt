@@ -19,43 +19,47 @@ export class Login extends Component {
       [name]: value
     });
   }
+  /*  <div>
+          <Link to="/register">Sign up</Link>
+        </div> */
   render() {
     return (
-      <div>
-        <h1>LOG IN</h1>
-        <h3>Dont have an account?</h3>
-        <div>
-          <Link to="/register">Sign up</Link>
-        </div>
-        <div className="homepage_container">
-          <div className="header_container">
-            {/*             <img src={home_img} alt="" />
-             */}{" "}
-          </div>
-        </div>
+      <div className="login_page">
         <div className="login_form">
-          <form className="form">
-            <label>
-              Username
-              <input
-                type="text"
-                placeholder="username"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Password
-              <input
-                type="password"
-                placeholder="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-          </form>
+          <h1>Login form:</h1>
+          <div className="form_wrapper">
+            <form className="form">
+              <label>
+                <input
+                  className="userInput"
+                  type="text"
+                  placeholder="Enter your email"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input
+                  className="userInput"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <input className="checkbox" type="checkbox" /> Remember me
+              </label>
+              <button className="login_button">LOGIN</button>
+              <div className="signup">
+                <Link to="/register" className="signup">
+                  Dont have an account? Sign up !
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
