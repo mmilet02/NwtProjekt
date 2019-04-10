@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./HomePage.css";
-import home_img from "../../../imagess/header_background.jpg";
-import transfer from "../../../imagess/transfer.jpg";
+import Slideshow from "../Slider/Slideshow.js"
 
 export class HomePage extends Component {
   constructor() {
@@ -20,54 +19,46 @@ export class HomePage extends Component {
   }
   render() {
     console.log(this.state);
-    // let trips = this.state.trips.map(trip => {
-    //   return (
-    //     <div key={trip.trip_id}>
-    //       <p>{trip.name}</p>
-    //     </div>
-    //   );
-    // });
+    let trips = this.state.trips.map(trip => {
+      return (
+        <div id={"trip" + trip.trip_id} key={trip.trip_id}>
+          <img
+            className="tripImg"
+            src={"http://localhost:3000/images/" + trip.image}
+            alt=""
+          />
+        </div>
+      );
+    });
     return (
       <div className="homepage_container">
         <div className="header_container">
-          <img src={home_img} alt="" />
+          <img src="http://localhost:3000/images/home_background.jpg" alt="" />
         </div>
-        <div>
-          <div className="heading">
-            {" "}
-            <h1>WELCOME / U PONUDI</h1>
-          </div>
-          <div className="img_container">
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-            <div className="pic">
-              <img src={transfer} alt="" />
-            </div>
-          </div>
-        </div>
+
         <div className="about_me">
           <h1>ABOUT</h1>
         </div>
+
+        <div className="ponude">
+          <Slideshow />
+        </div>
+
+
+        <div className="topTrips">
+          <div className="topTrips_heading">
+            <h1>TOP TRIPS</h1>
+          </div>
+          <div className="topTrips_img">
+            {trips}
+          </div>
+        </div>
+
+
         <div className="info">
           <h1>CONTACT</h1>
         </div>
-      </div>
+      </div >
     );
   }
 }

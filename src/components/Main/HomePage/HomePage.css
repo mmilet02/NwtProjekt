@@ -15,33 +15,57 @@
   /* width:100%; */
   text-align: center;
 }
-.img_container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.pic {
-  width: 200px;
-  height: 180px;
-  margin-left: 40px;
-  margin-right: 40px;
-}
-
-.pic img {
-  height: 100%;
-  width: 100%;
-}
-
 .about_me {
   width: 100%;
   height: 400px;
   background-color: aquamarine;
+  margin-bottom: 50px;
 }
 
 .info {
   width: 100%;
   height: 400px;
-  background-color: greenyellow;
+  background-color: rgb(201, 221, 170);
+  margin-top: 30px;
+}
+
+.ponude{
+  width: 90%;
+  margin:auto;
+}
+.topTrips{
+margin-top:100px;
+  width: 100%;
+  height: 350px;
+}
+
+.topTrips_heading{
+  width: 100%;
+  text-align: center;
+}
+
+.topTrips_img{
+  
+  
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.tripImg{
+  border-radius: 5%;
+  width: 210px;
+  height: 180px;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+#trip1{
+  margin-top: 100px;
+}
+#trip3{
+  margin-top: 100px;
 }
