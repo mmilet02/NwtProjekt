@@ -11,8 +11,59 @@ class Navbar extends Component {
   }
   render() {
     return (
-      <header className="header">
-        <div>
+      <header className="second_header">
+        <div className="firstHeaderPart">
+
+          {this.state.isLoggedIn ? (
+            <div className="ifLogin">
+              <div>
+                <Link to="/profile">Profile</Link>
+              </div>
+              <div >Logout</div>
+            </div>
+          ) : (
+              <div className="ifLogin">
+                <div>
+                  <Link to="/login">Login</Link>
+                </div>
+                <div>
+                  <Link to="/register">Register</Link>
+                </div>
+              </div>
+            )}
+
+        </div>
+
+        <div className="secondHeaderPart">
+          <Link to="/">MM ~ TOURS</Link>
+        </div>
+
+        <div className="thirdHeaderPart">
+          <div className="partOfThirdHeaderPart">
+            <div className="h">
+              <Link to="/trips">JEDNODNEVNI</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">VIŠEDNEVNI</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">EXTREME</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">ZA DJECU</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">ZA PAROVE</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">MARIO</Link>
+            </div>
+          </div>
+
+        </div>
+
+
+        {/* <div>
           <Link to="/">Logo</Link>
         </div>
         <nav>
@@ -36,7 +87,7 @@ class Navbar extends Component {
                 </div>
               </div>
             )}
-        </nav>
+        </nav> */}
       </header>
     );
   }

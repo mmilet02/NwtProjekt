@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./HomePage.css";
+import { Link } from "react-router-dom";
 import Slideshow from "../Slider/Slideshow.js"
 
 export class HomePage extends Component {
@@ -32,23 +33,29 @@ export class HomePage extends Component {
     });
     return (
       <div className="homepage_container">
+
         <div className="header_container">
-          <img src="http://localhost:3000/images/home_background.jpg" alt="" />
+          <img src="http://localhost:3000/images/home_background2.jpg" alt="" />
+          <Link to="/trips">
+            <div className="bookNow">
+              BOOK NOW!!
+          </div>
+          </Link>
         </div>
 
-        <div className="ponude">
+        {/* <div className="ponude">
           <Slideshow />
-        </div>
+        </div> */}
 
 
-        <div className="topTrips">
+        {/* <div className="topTrips">
           <div className="topTrips_heading">
             <h1>TOP TRIPS</h1>
           </div>
           <div className="topTrips_img">
             {trips}
           </div>
-        </div>
+        </div> */}
       </div >
     );
   }

@@ -11,7 +11,7 @@
  color: #333;
 }
 
-.mm{
+/* .mm{
   background-color: rgba(225,225 ,225 ,0)
 }
 .header a{
@@ -33,4 +33,66 @@ nav {
 .m {
   width: 90%;
   background-color: rgba(225,225 ,225 ,0);
+} */
+
+.second_header{
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(225,225 ,225 ,0.8);
+ font-size: 20px;
+ color: #333;
+}
+.firstHeaderPart{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-family: "Great Vibes", cursive;
+}
+
+.firstHeaderPart a{
+  text-decoration: none;
+  color: #333;
+}
+
+.ifLogin{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 15%;
+}
+.secondHeaderPart{
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.5vw;
+  font-family: "Great Vibes", cursive;
+}
+
+.secondHeaderPart a{
+  text-decoration: none;
+  color: #333;
+}
+
+.thirdHeaderPart{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.partOfThirdHeaderPart{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 70%;
+  font-weight: 500;
+  font-family: "Great Vibes", cursive;
+  margin-top: 20px;
+  margin-bottom:20px;
+}
+
+.partOfThirdHeaderPart a{
+
+  text-decoration: none;
+  color: #333;
 }

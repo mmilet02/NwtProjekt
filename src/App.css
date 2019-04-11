@@ -1,11 +1,8 @@
-body {
-  position: relative;
-  min-height: 100vh;
-}
+
 .main_container {
   max-width: 100%;
 }
 
 .content {
-  min-height: calc(100vh - 40px);
+  /* min-height: calc(100vw - 40px); */
 }
