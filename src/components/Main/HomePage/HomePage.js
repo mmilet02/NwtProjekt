@@ -36,10 +36,6 @@ export class HomePage extends Component {
           <img src="http://localhost:3000/images/home_background.jpg" alt="" />
         </div>
 
-        <div className="about_me">
-          <h1>ABOUT</h1>
-        </div>
-
         <div className="ponude">
           <Slideshow />
         </div>
@@ -52,11 +48,6 @@ export class HomePage extends Component {
           <div className="topTrips_img">
             {trips}
           </div>
-        </div>
-
-
-        <div className="info">
-          <h1>CONTACT</h1>
         </div>
       </div >
     );
