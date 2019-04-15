@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
-import Slideshow from "../Slider/Slideshow.js"
+import Slideshow from "../Slider/Slideshow.js";
 
 export class HomePage extends Component {
   constructor() {
@@ -10,7 +10,7 @@ export class HomePage extends Component {
       trips: []
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     let trips = require("../../../trips.json");
     console.log(trips);
     this.setState({
@@ -33,20 +33,16 @@ export class HomePage extends Component {
     });
     return (
       <div className="homepage_container">
-
         <div className="header_container">
           <img src="http://localhost:3000/images/home_background2.jpg" alt="" />
           <Link to="/trips">
-            <div className="bookNow">
-              BOOK NOW!!
-          </div>
+            <div className="bookNow">BOOK NOW!!</div>
           </Link>
         </div>
 
         {/* <div className="ponude">
           <Slideshow />
         </div> */}
-
 
         {/* <div className="topTrips">
           <div className="topTrips_heading">
@@ -56,7 +52,7 @@ export class HomePage extends Component {
             {trips}
           </div>
         </div> */}
-      </div >
+      </div>
     );
   }
 }

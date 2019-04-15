@@ -3,12 +3,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height:80px;
+  height: 80px;
   padding-left: 10%;
   padding-right: 10%;
-  background-color: rgba(225,225 ,225 ,0.8);
- font-size: 20px;
- color: #333;
+  background-color: rgba(225, 225, 225, 0.8);
+  font-size: 20px;
+  color: #333;
 }
 
 /* .mm{
@@ -35,14 +35,14 @@ nav {
   background-color: rgba(225,225 ,225 ,0);
 } */
 
-.second_header{
+.second_header {
   display: flex;
   flex-direction: column;
-  background-color: rgba(225,225 ,225 ,0.8);
- font-size: 20px;
- color: #333;
+  background-color: rgba(225, 225, 225, 0.8);
+  font-size: 20px;
+  color: #333;
 }
-.firstHeaderPart{
+.firstHeaderPart {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -50,18 +50,18 @@ nav {
   font-family: "Great Vibes", cursive;
 }
 
-.firstHeaderPart a{
+.firstHeaderPart a {
   text-decoration: none;
   color: #333;
 }
 
-.ifLogin{
+.ifLogin {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 15%;
 }
-.secondHeaderPart{
+.secondHeaderPart {
   width: 100%;
   text-align: center;
   font-weight: 700;
@@ -69,18 +69,18 @@ nav {
   font-family: "Great Vibes", cursive;
 }
 
-.secondHeaderPart a{
+.secondHeaderPart a {
   text-decoration: none;
   color: #333;
 }
 
-.thirdHeaderPart{
+.thirdHeaderPart {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.partOfThirdHeaderPart{
+.partOfThirdHeaderPart {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -88,11 +88,10 @@ nav {
   font-weight: 500;
   font-family: "Great Vibes", cursive;
   margin-top: 20px;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
-.partOfThirdHeaderPart a{
-
+.partOfThirdHeaderPart a {
   text-decoration: none;
   color: #333;
 }
