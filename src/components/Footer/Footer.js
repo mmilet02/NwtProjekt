@@ -5,20 +5,23 @@ export class Footer extends Component {
   render() {
     return (
       <div className="footer">
-        <div>
-          <h3>Logo</h3>
-        </div>
+
         <div className="contact">
-          <h3>Contact us</h3>
-          <div className="icons">
-            <i class="fas fa-phone" />
-            <span className="text">+385 98/601/661</span>
-            <br />
-            <i class="far fa-envelope" />
-            <span className="text">mmtours@gmail.com</span>
-            <br />
-            <i class="fas fa-home" />
-            <span className="text">Kamen, Split</span>
+          <div className="logo">
+            <img src="http://localhost:3000/images/logo.png" alt="" />
+          </div>
+          <div>
+            <h3>Contact us</h3>
+            <div className="icons">
+              <i class="fas fa-phone" />
+              <span className="text">+385 98/601/661</span>
+              <br />
+              <i class="far fa-envelope" />
+              <span className="text">mmtours@gmail.com</span>
+              <br />
+              <i class="fas fa-home" />
+              <span className="text">Kamen, Split</span>
+            </div>
           </div>
         </div>
         <div className="follow">

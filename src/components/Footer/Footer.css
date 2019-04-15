@@ -9,8 +9,22 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  font-family: "Great Vibes", cursive;
 }
 
+.contact{
+  display: flex;
+  flex-direction: row;
+}
+.logo{
+  
+  width:150px;
+}
+.logo img{
+  width: 100%;
+  margin-top: 20px;
+  margin-left: 20px;
+}
 .follow i {
   width: 50px;
   height: 30px;
@@ -22,12 +36,15 @@
 }
 
 .contact h3 {
+  font-family: "Great Vibes", cursive;
   text-align: center;
 }
 .follow h3 {
+  font-family: "Great Vibes", cursive;
   text-align: center;
 }
 .certificate h3 {
+  font-family: "Great Vibes", cursive;
   text-align: center;
 }
 .icons {
