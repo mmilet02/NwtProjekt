@@ -11,13 +11,13 @@ export class Footer extends Component {
         <div className="contact">
           <h3>Contact us</h3>
           <div className="icons">
-            <i class="fas fa-phone"> </i>
+            <i class="fas fa-phone" />
             <span className="text">+385 98/601/661</span>
             <br />
             <i class="far fa-envelope" />
             <span className="text">mmtours@gmail.com</span>
             <br />
-            <i class="fas fa-home"> </i>
+            <i class="fas fa-home" />
             <span className="text">Kamen, Split</span>
           </div>
         </div>
