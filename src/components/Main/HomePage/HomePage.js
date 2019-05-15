@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import "./HomePage.css";
-import { Link } from "react-router-dom";
-import Slideshow from "../Slider/Slideshow.js";
 
 export class HomePage extends Component {
   constructor() {
@@ -20,25 +18,34 @@ export class HomePage extends Component {
   }
   render() {
     console.log(this.state);
-    let trips = this.state.trips.map(trip => {
+    let trips = this.state.trips.slice(0, 3).map(trip => {
       return (
-        <div id={"trip" + trip.trip_id} key={trip.trip_id}>
+        <div className="tripCard" id={"trip" + trip.trip_id} key={trip.trip_id}>
           <img
             className="tripImg"
             src={"http://localhost:3000/images/" + trip.image}
             alt=""
           />
+          <div className="trophy">
+            <img src="http://localhost:3000/images/best.png" alt="" />
+          </div>
         </div>
       );
     });
     return (
       <div className="homepage_container">
         <div className="header_container">
-          <img src="http://localhost:3000/images/home_background2.jpg" alt="" />
-          <Link to="/trips">
+          <img src="http://localhost:3000/images/home_background.jpg" alt="" />
+          {/* <Link to="/trips">
             <div className="bookNow">BOOK NOW!!</div>
-          </Link>
+          </Link> */}
         </div>
+        <div className="heading">
+          <p>
+            ────────────────────────── MOST POPULAR ──────────────────────────
+          </p>
+        </div>
+        <div className="bestTrips">{trips}</div>
 
         {/* <div className="ponude">
           <Slideshow />

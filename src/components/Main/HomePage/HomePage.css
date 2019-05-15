@@ -2,88 +2,108 @@
   width: 100%;
   height: 100%;
 }
+.heading {
+  color: #333;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2vw;
+  font-family: "Great Vibes", cursive;
+}
 
 .header_container {
   width: 100%;
   position: relative;
   height: 100%;
-
 }
 
-.bookNow{
+.bookNow {
   width: 300px;
-	height: 100px;
-  
+  height: 100px;
+
   position: absolute;
   top: 50%;
   left: 50%;
-  
+
   transform: translate(-50%, -50%);
 
-  
   font-family: "Great Vibes", cursive;
   font-size: 2.5vw;
-  background-color: rgba(225,225 ,225 ,0.7);
+  background-color: rgba(225, 225, 225, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5%;
-  
 }
-.bookNow:hover{
-  background-color: rgba(225,225 ,225 ,1);
+.bookNow:hover {
+  background-color: rgba(225, 225, 225, 1);
 }
-.header_container a{
+.header_container a {
   text-decoration: none;
   color: #333;
   font-weight: 700;
 }
 .header_container img {
-  
   width: 100%;
 }
+.tripCard {
+  position: relative;
+}
 
-/* .heading h1 {
+.trophy {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 65%;
+  left: 70%;
+  width: 60;
+  height: 60px;
+  border-radius: 100%;
+  /* background-color: rgba(225, 225, 225, 0.7); */
+}
+.trophy img {
+  width: 90%;
+  height: 90%;
+}
+.bestTrips {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 60px;
+}
+.heading h1 {
   text-align: center;
 }
 
-.ponude{
+.ponude {
   width: 100%;
-  margin:auto;
+  margin: auto;
 }
-.topTrips{
-margin-top:100px;
+.topTrips {
+  margin-top: 100px;
   width: 100%;
   height: 350px;
 }
 
-.topTrips_heading{
+.topTrips_heading {
   width: 100%;
   text-align: center;
 }
 
-.topTrips_img{
-  
-  
+.topTrips_img {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-
-.tripImg{
+.tripImg {
   border-radius: 5%;
   width: 210px;
   height: 180px;
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 }
-
-#trip1{
-  margin-top: 100px;
-}
-#trip3{
-  margin-top: 100px;
-} */

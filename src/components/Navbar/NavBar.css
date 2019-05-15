@@ -48,6 +48,9 @@ nav {
   flex-direction: row;
   justify-content: flex-end;
   font-family: "Great Vibes", cursive;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .firstHeaderPart a {
@@ -61,7 +64,30 @@ nav {
   justify-content: space-around;
   width: 15%;
 }
+
 .secondHeaderPart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #333;
+}
+
+.secondHeaderPart a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-family: "Great Vibes", cursive;
+}
+
+.trips {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* .secondHeaderPart {
   width: 100%;
   text-align: center;
   font-weight: 700;
@@ -94,4 +120,4 @@ nav {
 .partOfThirdHeaderPart a {
   text-decoration: none;
   color: #333;
-}
+} */

@@ -5,11 +5,10 @@ export class Footer extends Component {
   render() {
     return (
       <div className="footer">
-
         <div className="contact">
-          <div className="logo">
+          {/* <div className="logo">
             <img src="http://localhost:3000/images/logo.png" alt="" />
-          </div>
+          </div> */}
           <div>
             <h3>Contact us</h3>
             <div className="icons">

@@ -13,28 +13,45 @@ class Navbar extends Component {
     return (
       <header className="second_header">
         <div className="firstHeaderPart">
-
           {this.state.isLoggedIn ? (
             <div className="ifLogin">
               <div>
                 <Link to="/profile">Profile</Link>
               </div>
-              <div >Logout</div>
+              <div>Logout</div>
             </div>
           ) : (
-              <div className="ifLogin">
-                <div>
-                  <Link to="/login">Login</Link>
-                </div>
-                <div>
-                  <Link to="/register">Register</Link>
-                </div>
+            <div className="ifLogin">
+              <div>
+                <Link to="/login">Login</Link>
               </div>
-            )}
-
+              <div>
+                <Link to="/register">Register</Link>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="secondHeaderPart">
+          <div className="logo">
+            <Link to="/">
+              <img src="http://localhost:3000/images/logo.png" alt="" />
+            </Link>
+          </div>
+          <div className="trips">
+            <div className="h">
+              <Link to="/trips">EXTREME</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">EXPLORE</Link>
+            </div>
+            <div className="h">
+              <Link to="/trips">RELAX</Link>
+            </div>
+          </div>
+        </div>
+
+        {/* <div className="secondHeaderPart">
           <Link to="/">MM ~ TOURS</Link>
         </div>
 
@@ -60,8 +77,7 @@ class Navbar extends Component {
             </div>
           </div>
 
-        </div>
-
+        </div> */}
 
         {/* <div>
           <Link to="/">Logo</Link>

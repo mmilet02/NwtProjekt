@@ -12,15 +12,14 @@
   font-family: "Great Vibes", cursive;
 }
 
-.contact{
+.contact {
   display: flex;
   flex-direction: row;
 }
-.logo{
-  
-  width:150px;
+.logo {
+  width: 150px;
 }
-.logo img{
+.logo img {
   width: 100%;
   margin-top: 20px;
   margin-left: 20px;
