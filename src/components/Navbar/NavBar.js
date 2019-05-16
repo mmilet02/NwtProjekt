@@ -6,7 +6,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: true
     };
   }
   render() {
@@ -15,6 +15,16 @@ class Navbar extends Component {
         <div className="firstHeaderPart">
           {this.state.isLoggedIn ? (
             <div className="ifLogin">
+              <div>
+                <Link to="/favorite">
+                  <i class="fas fa-heart fa-lg" />
+                </Link>
+              </div>
+              <div>
+                <Link to="/profile">
+                  <i class="fas fa-plus fa-lg" />
+                </Link>
+              </div>
               <div>
                 <Link to="/profile">Profile</Link>
               </div>

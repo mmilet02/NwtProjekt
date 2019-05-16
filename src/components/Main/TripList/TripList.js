@@ -56,11 +56,10 @@ export class TripList extends Component {
             alt=""
           />
         </div>
-
+        <div className="trips_heading">
+          <p>────────────────────────── TRIPS ──────────────────────────</p>
+        </div>
         <div className="tripsContainer">
-          <div className="trips_heading">
-            <p>────────────────────────── TRIPS ──────────────────────────</p>
-          </div>
           <div className="trips">{trips}</div>
         </div>
       </div>

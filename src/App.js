@@ -8,13 +8,13 @@ import Profile from "./components/Main/Profile/Profile";
 import Register from "./components/Main/Auth/Register/Register";
 import Login from "./components/Main/Auth/Login/Login";
 import TripList from "./components/Main/TripList/TripList";
+import FavList from "./components/Main/FavList/FavList";
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="main_container">
-
           <Navbar />
 
           <div className="content">
@@ -23,6 +23,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/trips" component={TripList} />
+            <Route exact path="/favorite" component={FavList} />
           </div>
           <Footer />
         </div>

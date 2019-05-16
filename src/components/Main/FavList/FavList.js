@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./Profile.css";
+import "./FavList.css";
 
-export class Profile extends Component {
+export class FavList extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,41 +47,12 @@ export class Profile extends Component {
       );
     });
 
-    trips.push(
-      <div className="tripp" id="addCard">
-        <i class="fas fa-plus fa-2x" />
-      </div>
-    );
     return (
       <div className="profilContainer">
-        <div className="profilInfo">
-          <div className="profilImg">
-            <div className="profilImg1">
-              <img src="http://localhost:3000/images/profil.jpg" alt="" />
-            </div>
-          </div>
-          <div className="profilInfo1">
-            <p>
-              <b>Ime</b> : Mario Mileta
-            </p>
-            <p>
-              <b>Spol</b>: M
-            </p>
-            <p>
-              <b>Dob</b>: 30 godina
-            </p>
-            <p>
-              <b>Zanimanje</b>: klaun
-            </p>
-            <p>
-              <b>Firma</b> : LadiJaja d.o.o.
-            </p>
-          </div>
-        </div>
         <div className="myTrips">
           <div className="myTripsHeading">
             <p>
-              ────────────────────────── MY TRIPS ──────────────────────────
+              ───────────────────────── MY FAVORITE ─────────────────────────
             </p>
           </div>
           <div className="myTripsTrips">{trips}</div>
@@ -90,5 +61,4 @@ export class Profile extends Component {
     );
   }
 }
-
-export default Profile;
+export default FavList;
