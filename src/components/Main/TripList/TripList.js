@@ -21,14 +21,28 @@ export class TripList extends Component {
     console.log(this.state.trips);
     let trips = this.state.trips.map(trip => {
       return (
-        <div key={trip.trip_id} className="trip">
-          <p>{trip.name}</p>
-          <div>
+        <div key={trip.trip_id} className="tripp">
+          <div className="tripImage">
             <img
-              className="tripImage"
+              className="trippImage"
               src={"http://localhost:3000/images/" + trip.image}
               alt=""
             />
+          </div>
+          <div className="info">
+            <div className="info1">
+              <p className="location">{trip.location}</p>
+              <p>Start : {trip.date}</p>
+              <p>Price : {trip.price} €</p>
+              <p>Tickets left : {trip.freeSpace}</p>
+              <p>Duration : {trip.duration} days</p>
+              <div className="buttonDetails">
+                <p>More details</p>
+              </div>
+            </div>
+            <div className="infoFav">
+              <i class="fas fa-heart fa-lg" />
+            </div>
           </div>
         </div>
       );
@@ -36,13 +50,19 @@ export class TripList extends Component {
     return (
       <div>
         <div className="filter">
-          <h1>FILTER</h1>
+          <img
+            className="triplistimg"
+            src="http://localhost:3000/images/rafting.jpg"
+            alt=""
+          />
         </div>
-        <div className="trips_heading">
-          {" "}
-          <h1>HEADING</h1>
+
+        <div className="tripsContainer">
+          <div className="trips_heading">
+            <p>────────────────────────── TRIPS ──────────────────────────</p>
+          </div>
+          <div className="trips">{trips}</div>
         </div>
-        <div className="trips">{trips}</div>
       </div>
     );
   }

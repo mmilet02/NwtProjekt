@@ -38,7 +38,7 @@ class Navbar extends Component {
               <img src="http://localhost:3000/images/logo.png" alt="" />
             </Link>
           </div>
-          <div className="trips">
+          <div className="tripss">
             <div className="h">
               <Link to="/trips">EXTREME</Link>
             </div>
