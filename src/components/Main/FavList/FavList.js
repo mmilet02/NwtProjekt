@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./FavList.css";
-
+import { Link } from "react-router-dom";
 export class FavList extends Component {
   constructor() {
     super();
@@ -22,11 +22,13 @@ export class FavList extends Component {
       return (
         <div key={trip.trip_id} className="tripp">
           <div className="tripImage">
-            <img
-              className="trippImage"
-              src={"http://localhost:3000/images/" + trip.image}
-              alt=""
-            />
+            <Link to={"/post/" + trip.trip_id}>
+              <img
+                className="trippImage"
+                src={"http://localhost:3000/images/" + trip.image}
+                alt=""
+              />
+            </Link>
           </div>
           <div className="info">
             <div className="info1">
@@ -35,9 +37,11 @@ export class FavList extends Component {
               <p>Price : {trip.price} €</p>
               <p>Tickets left : {trip.freeSpace}</p>
               <p>Duration : {trip.duration} days</p>
-              <div className="buttonDetails">
-                <p>More details</p>
-              </div>
+              <Link to={"/post/" + trip.trip_id}>
+                <div className="buttonDetails">
+                  <p>More details</p>
+                </div>
+              </Link>
             </div>
             <div className="infoFav">
               <i class="fas fa-heart fa-lg" />

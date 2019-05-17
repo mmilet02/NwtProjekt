@@ -17,12 +17,12 @@ class Navbar extends Component {
             <div className="ifLogin">
               <div>
                 <Link to="/favorite">
-                  <i class="fas fa-heart fa-lg" />
+                  <i className="fas fa-heart fa-lg" />
                 </Link>
               </div>
               <div>
                 <Link to="/profile">
-                  <i class="fas fa-plus fa-lg" />
+                  <i className="fas fa-plus fa-lg" />
                 </Link>
               </div>
               <div>

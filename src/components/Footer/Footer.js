@@ -12,13 +12,13 @@ export class Footer extends Component {
           <div>
             <h3>Contact us</h3>
             <div className="icons">
-              <i class="fas fa-phone" />
+              <i className="fas fa-phone" />
               <span className="text">+385 98/601/661</span>
               <br />
-              <i class="far fa-envelope" />
+              <i className="far fa-envelope" />
               <span className="text">mmtours@gmail.com</span>
               <br />
-              <i class="fas fa-home" />
+              <i className="fas fa-home" />
               <span className="text">Kamen, Split</span>
             </div>
           </div>
@@ -26,9 +26,9 @@ export class Footer extends Component {
         <div className="follow">
           <h3>Follow us</h3>
           <div className="icons">
-            <i class="fab fa-twitter fa-2x" />
-            <i class="fab fa-facebook-square fa-2x" />
-            <i class="fab fa-instagram fa-2x" />
+            <i className="fab fa-twitter fa-2x" />
+            <i className="fab fa-facebook-square fa-2x" />
+            <i className="fab fa-instagram fa-2x" />
           </div>
         </div>
         <div className="certificate">
@@ -36,7 +36,7 @@ export class Footer extends Component {
           <div className="icons">
             {/*           <i class="fas fa-trophy fa-2x" />
              */}{" "}
-            <i class="fab fa-tripadvisor fa-4x" />
+            <i className="fab fa-tripadvisor fa-4x" />
           </div>
         </div>
       </div>
