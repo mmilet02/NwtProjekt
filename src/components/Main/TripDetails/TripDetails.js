@@ -55,9 +55,7 @@ export class TripDetails extends Component {
         <div className="tripDescription">
           <p>{this.state.trip.description}</p>
         </div>
-        <div className="bookNow">
-          <p>BOOK NOW</p>
-        </div>
+        <button className="bookNow">BOOK NOW</button>
       </div>
     );
   }
