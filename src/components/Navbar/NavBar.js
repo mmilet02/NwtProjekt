@@ -21,7 +21,7 @@ class Navbar extends Component {
                 </Link>
               </div>
               <div>
-                <Link to="/profile">
+                <Link to="/createTrip">
                   <i className="fas fa-plus fa-lg" />
                 </Link>
               </div>

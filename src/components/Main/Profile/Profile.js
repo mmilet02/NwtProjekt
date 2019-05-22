@@ -6,7 +6,10 @@ export class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      trips: []
+      trips: [],
+      isVisible1: false,
+      isVisible2: false,
+      isVisible3: false
     };
   }
   componentDidMount() {
@@ -18,8 +21,32 @@ export class Profile extends Component {
     });
   }
 
+  toggleDropdown1 = () =>
+    this.setState({
+      ...this.state,
+      isVisible1: !this.state.isVisible1,
+      isVisible2: false,
+      isVisible3: false
+    });
+
+  toggleDropdown2 = () =>
+    this.setState({
+      ...this.state,
+      isVisible2: !this.state.isVisible2,
+      isVisible1: false,
+      isVisible3: false
+    });
+
+  toggleDropdown3 = () =>
+    this.setState({
+      ...this.state,
+      isVisible3: !this.state.isVisible3,
+      isVisible2: false,
+      isVisible1: false
+    });
+
   render() {
-    let trips = this.state.trips.slice(0, 2).map(trip => {
+    let trips = this.state.trips.map(trip => {
       return (
         <div key={trip.trip_id} className="tripp">
           <div className="tripImage">
@@ -51,18 +78,115 @@ export class Profile extends Component {
         </div>
       );
     });
-
+    let trips2 = this.state.trips.map(trip => {
+      return (
+        <div key={trip.trip_id} className="tripp">
+          <div className="tripImage">
+            <Link to={"/post/" + trip.trip_id}>
+              <img
+                className="trippImage"
+                src={"http://localhost:3000/images/" + trip.image}
+                alt=""
+              />
+            </Link>
+          </div>
+          <div className="info">
+            <div className="info1">
+              <p className="location">{trip.location}</p>
+              <p>Start : {trip.date}</p>
+              <p>Price : {trip.price} €</p>
+              <p>Tickets left : {trip.freeSpace}</p>
+              <p>Duration : {trip.duration} days</p>
+              <Link to={"/post/" + trip.trip_id}>
+                <div className="buttonDetails">
+                  <p>More details</p>
+                </div>
+              </Link>
+            </div>
+            <div className="infoFav">
+              <i class="fas fa-heart fa-lg" />
+            </div>
+          </div>
+        </div>
+      );
+    });
     trips.push(
-      <div className="tripp" id="addCard">
+      <div onClick={this.toggleDropdown3} className="tripp" id="addCard">
         <i class="fas fa-plus fa-2x" />
       </div>
     );
+
+    let option;
+    if (this.state.isVisible1) {
+      option = <div className="myTripsTrips">{trips}</div>;
+    } else if (this.state.isVisible2) {
+      option = <div className="myTripsTrips">{trips2}</div>;
+    } else if (this.state.isVisible3) {
+      option = (
+        <div className="formDiv">
+          <form className="form">
+            <label>
+              <input
+                className="user_input"
+                type="text"
+                placeholder="Name"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label>
+              <input
+                className="user_input"
+                type="text"
+                placeholder="Surname"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label>
+              <input
+                className="user_input"
+                type="text"
+                placeholder="Enter your email"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label>
+              <input
+                className="user_input"
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label>
+              <input
+                className="user_input"
+                type="password"
+                placeholder="Repeat password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </label>
+
+            <button className="createButton">CREATE</button>
+          </form>
+        </div>
+      );
+    }
     return (
       <div className="profilContainer">
         <div className="profilInfo">
           <div className="profilImg">
             <div className="profilImg1">
-              <img src="http://localhost:3000/images/profil.jpg" alt="" />
+              <img src="http://localhost:3000/images/profil.png" alt="" />
             </div>
           </div>
           <div className="profilInfo1">
@@ -83,13 +207,31 @@ export class Profile extends Component {
             </p>
           </div>
         </div>
-        <div className="myTrips">
+        {/* <div className="myTrips">
           <div className="myTripsHeading">
             <p>
               ────────────────────────── MY TRIPS ──────────────────────────
             </p>
           </div>
-          <div className="myTripsTrips">{trips}</div>
+          
+        </div> */}
+
+        <div className="dropdown_container">
+          <div className="myTripsHeading">
+            <div onClick={this.toggleDropdown1}>
+              MY TRIPS
+              <i class="fas fa-chevron-down" />
+            </div>
+            <div onClick={this.toggleDropdown2}>
+              MY FAVORITE
+              <i class="fas fa-chevron-down" />
+            </div>
+            <div onClick={this.toggleDropdown3}>
+              CREATE YOUR TRIP
+              <i class="fas fa-chevron-down" />
+            </div>
+          </div>
+          <div className="optionDiv"> {option}</div>
         </div>
       </div>
     );

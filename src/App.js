@@ -10,6 +10,7 @@ import Login from "./components/Main/Auth/Login/Login";
 import TripList from "./components/Main/TripList/TripList";
 import FavList from "./components/Main/FavList/FavList";
 import TripDetails from "./components/Main/TripDetails/TripDetails";
+import CreateTrip from "./components/Main/CreateTrip/CreateTrip";
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route exact path="/trips" component={TripList} />
             <Route exact path="/favorite" component={FavList} />
             <Route exact path="/post/:id" component={TripDetails} />
+            <Route exact path="/createTrip" component={CreateTrip} />
           </div>
           <Footer />
         </div>
