@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Profile.css";
 import { Link } from "react-router-dom";
+import CreateTrip from "../CreateTrip/CreateTrip";
 
 export class Profile extends Component {
   constructor() {
@@ -122,64 +123,7 @@ export class Profile extends Component {
     } else if (this.state.isVisible2) {
       option = <div className="myTripsTrips">{trips2}</div>;
     } else if (this.state.isVisible3) {
-      option = (
-        <div className="formDiv">
-          <form className="form">
-            <label>
-              <input
-                className="user_input"
-                type="text"
-                placeholder="Name"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              <input
-                className="user_input"
-                type="text"
-                placeholder="Surname"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              <input
-                className="user_input"
-                type="text"
-                placeholder="Enter your email"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              <input
-                className="user_input"
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              <input
-                className="user_input"
-                type="password"
-                placeholder="Repeat password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </label>
-
-            <button className="createButton">CREATE</button>
-          </form>
-        </div>
-      );
+      option = <CreateTrip />;
     }
     return (
       <div className="profilContainer">

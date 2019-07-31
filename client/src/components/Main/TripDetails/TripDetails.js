@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./TripDetails.css";
+
 export class TripDetails extends Component {
   constructor(props) {
     super(props);

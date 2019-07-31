@@ -4,7 +4,7 @@ const router = express.Router();
 /* const sequelize = require("sequelize");
  */
 const models = require("../../models/index");
-/* const Trip = require("../../models/trip");
+/* const Trip = require("../../models/trip"); doesn't work, dunno why
  */
 
 const Trip = models.Trip;
@@ -17,6 +17,12 @@ router.get("/", (req, res) => {
       res.sendStatus(200);
     })
     .catch(err => console.log("Error", err));
+});
+
+router.post("/", (req, res) => {
+  console.log("inside the router");
+  console.log(req.body);
+  return;
 });
 
 module.exports = router;

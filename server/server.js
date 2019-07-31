@@ -6,13 +6,6 @@ const port = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-/* mongoose
-  .connect(
-    "mongodb+srv://Mario:curko333@cluster0-mdyho.mongodb.net/ReactRedux?retryWrites=true",
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("Connected to mongoDB"))
-  .catch(err => console.log(err)); */
 const database = new Sequelize("nwt_database", "postgres", "postgres", {
   /*   host: "127.0.0.1",
    */ dialect: "postgres"

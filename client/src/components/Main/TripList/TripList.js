@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./TripList.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export class TripList extends Component {
   constructor() {
@@ -17,6 +18,11 @@ export class TripList extends Component {
       ...this.state,
       trips: trips
     });
+
+    axios
+      .get("/api/trips")
+      .then(res => console.log("Success", res))
+      .catch(err => console.log("Error", err));
   }
   render() {
     console.log(this.state.trips);
