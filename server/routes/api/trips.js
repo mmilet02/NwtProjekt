@@ -71,10 +71,15 @@ router.post("/", upload.single("tripImage"), (req, res) => {
     end_hour,
     location
   } = req.body);
+  if (!!req.file) {
+    data = {
+      ...data,
+      image: req.file.path
+    };
+  }
   let space = +req.body.space;
   data = {
     ...data,
-    image: req.file.path,
     freespace: space,
     price: +req.body.price
   };
@@ -93,19 +98,46 @@ router.get("/show/:id", (req, res) => {
   });
 });
 
-router.put("/edit/:id", (req, res) => {
-  Trip.update(req.body, { where: { id } }).then(() => {
-    res.status(200).send("trip updated id= " + id);
-  });
+router.put("/edit/:id", upload.single("tripImage"), (req, res) => {
+  console.log(req.file);
+  const id = +req.params.id;
+  let data = ({
+    name,
+    description,
+    start_date,
+    end_date,
+    start_hour,
+    end_hour,
+    location
+  } = req.body);
+  if (!!req.file) {
+    data = {
+      ...data,
+      image: req.file.path
+    };
+  }
+  let space = +req.body.space;
+  data = {
+    ...data,
+    freespace: space,
+    price: +req.body.price
+  };
+  Trip.update(data, { where: { id: id } })
+    .then(() => {
+      res.status(200).send("trip updated id= " + id);
+    })
+    .catch(err => console.log("ERROR", err));
 });
 
 router.delete("/delete/:id", (req, res) => {
   id = req.params.id;
   Trip.destroy({
     where: { id: id }
-  }).then(() => {
-    res.status(200).send("Deleting successfull");
-  });
+  })
+    .then(() => {
+      res.status(200).send("Deleting successfull");
+    })
+    .catch(err => console.log("ERROR", err));
 });
 
 module.exports = router;

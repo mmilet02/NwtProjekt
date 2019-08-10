@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./CreateTrip.css";
 import TimePicker from "rc-time-picker";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-
+/* import DatePicker from "react-datepicker";
+ */
 import "rc-time-picker/assets/index.css";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -58,7 +58,9 @@ class CreateTrip extends Component {
     data.append("end_hour", this.state.end_hour);
     data.append("space", this.state.space);
     data.append("price", this.state.price);
-    data.append("tripImage", this.state.tripImage, "tripImage");
+    if (!!this.state.tripImage) {
+      data.append("tripImage", this.state.tripImage, "tripImage");
+    }
     data.append("location", this.state.location);
 
     axios
@@ -66,10 +68,11 @@ class CreateTrip extends Component {
       .then(res => {
         console.log("Success");
         console.log(res);
-        this.props.history.push("/trips");
-        /*   window.location.reload();
+        /*         this.props.history.push("/trips");
+         */ window.location.reload();
 
-        this.props.history.push("/"); */
+        /*         this.props.history.push("/");
+         */
       })
       .catch(err => {
         console.log("Error", err);

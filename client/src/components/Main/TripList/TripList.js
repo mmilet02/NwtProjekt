@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TripList.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import CreateTrip from "../CreateTrip/CreateTrip";
 
 export class TripList extends Component {
   constructor() {
@@ -12,13 +13,6 @@ export class TripList extends Component {
   }
 
   componentWillMount() {
-    /* let trips = require("../../../trips.json");
-    console.log(trips);
-    this.setState({
-      ...this.state,
-      trips: trips
-    }); */
-
     axios
       .get("/api/trips")
       .then(res => {
@@ -31,7 +25,7 @@ export class TripList extends Component {
       .catch(err => console.log("Error", err));
   }
   render() {
-    console.log(this.state.trips);
+    console.log(!!this.state.trips[0]);
     let trips = this.state.trips.map(trip => {
       return (
         <div key={trip.id} className="tripp">
@@ -77,7 +71,14 @@ export class TripList extends Component {
           <p>────────────────────────── TRIPS ──────────────────────────</p>
         </div>
         <div className="tripsContainer">
-          <div className="trips">{trips}</div>
+          {!!this.state.trips[0] ? (
+            <div className="trips">{trips}</div>
+          ) : (
+            <div>
+              <h2>NO AVAILABLE TRIPS, CREATE ONE</h2>
+              <CreateTrip />
+            </div>
+          )}
         </div>
       </div>
     );

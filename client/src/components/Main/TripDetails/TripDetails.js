@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./TripDetails.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export class TripDetails extends Component {
   constructor(props) {
@@ -12,8 +13,6 @@ export class TripDetails extends Component {
   }
 
   componentWillMount() {
-    /*  let trips = require("../../../trips.json");
-    console.log(trips); */
     axios
       .get("/api/trips/show/" + this.props.match.params.id)
       .then(res => {
@@ -23,11 +22,6 @@ export class TripDetails extends Component {
         });
       })
       .catch(err => console.log("Ups, something went wrong", err));
-
-    /* this.setState({
-      ...this.state,
-      trip: trips.find(t => t.trip_id === +this.props.match.params.id)
-    }); */
   }
 
   deleteTrip(event) {
@@ -43,16 +37,18 @@ export class TripDetails extends Component {
       })
       .catch(err => console.log("ERROR:", err));
   }
-  /* editTrip(event) {
+  editTrip(event) {
     event.preventDefault();
     axios
       .put("/edit/" + this.state.trip)
       .then(res => console.log("Result:", res))
-      .catch(err => console.log("ERROR:", err)); */
+      .catch(err => console.log("ERROR:", err));
 
-  /* window.location.reload();
-
-    this.props.history.push("/");} */
+    window.location.reload();
+    /*
+    this.props.history.push("/");
+    */
+  }
 
   render() {
     console.log(this.state.trip);
@@ -93,9 +89,10 @@ export class TripDetails extends Component {
         <button className="bookNow" onClick={this.deleteTrip}>
           Delete
         </button>
-        <button className="bookNow" onClick={this.editTrip}>
-          Edit
-        </button>
+        <Link to={"/edit/" + this.state.trip.id}>
+          <button className="bookNow">Edit</button>
+        </Link>
+
         <button className="bookNow">BOOK NOW</button>
       </div>
     );

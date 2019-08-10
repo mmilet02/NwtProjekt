@@ -28,7 +28,7 @@ class App extends Component {
             <Route exact path="/trips" component={TripList} />
             <Route exact path="/favorite" component={FavList} />
             <Route exact path="/trip/:id" component={TripDetails} />
-            <Route path="/edit/:id" component={EditTrip} />
+            <Route exact path="/edit/:id" component={EditTrip} />
             <Route exact path="/createTrip" component={CreateTrip} />
           </div>
           <Footer />
