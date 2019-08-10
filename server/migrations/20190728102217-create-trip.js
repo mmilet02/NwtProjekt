@@ -14,14 +14,14 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      date: {
-        type: Sequelize.DATE
-      },
       freespace: {
         type: Sequelize.INTEGER
       },
-      duration: {
-        type: Sequelize.INTEGER
+      start_hour: {
+        type: Sequelize.STRING
+      },
+      end_hour: {
+        type: Sequelize.STRING
       },
       location: {
         type: Sequelize.STRING
@@ -30,10 +30,8 @@ module.exports = {
         type: Sequelize.DOUBLE
       },
       image: {
-        type: Sequelize.STRING
-      },
-      company: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

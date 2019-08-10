@@ -11,6 +11,7 @@ import TripList from "./components/Main/TripList/TripList";
 import FavList from "./components/Main/FavList/FavList";
 import TripDetails from "./components/Main/TripDetails/TripDetails";
 import CreateTrip from "./components/Main/CreateTrip/CreateTrip";
+import EditTrip from "./components/EditTrip/EditTrip";
 
 class App extends Component {
   render() {
@@ -26,7 +27,8 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/trips" component={TripList} />
             <Route exact path="/favorite" component={FavList} />
-            <Route exact path="/post/:id" component={TripDetails} />
+            <Route exact path="/trip/:id" component={TripDetails} />
+            <Route path="/edit/:id" component={EditTrip} />
             <Route exact path="/createTrip" component={CreateTrip} />
           </div>
           <Footer />

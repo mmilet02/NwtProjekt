@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./TripDetails.css";
+import axios from "axios";
 
 export class TripDetails extends Component {
   constructor(props) {
@@ -7,25 +8,58 @@ export class TripDetails extends Component {
     this.state = {
       trip: {}
     };
+    this.deleteTrip = this.deleteTrip.bind(this);
   }
 
   componentWillMount() {
-    let trips = require("../../../trips.json");
-    console.log(trips);
-    this.setState({
+    /*  let trips = require("../../../trips.json");
+    console.log(trips); */
+    axios
+      .get("/api/trips/show/" + this.props.match.params.id)
+      .then(res => {
+        this.setState({
+          ...this.state,
+          trip: res.data
+        });
+      })
+      .catch(err => console.log("Ups, something went wrong", err));
+
+    /* this.setState({
       ...this.state,
       trip: trips.find(t => t.trip_id === +this.props.match.params.id)
-    });
+    }); */
   }
+
+  deleteTrip(event) {
+    event.preventDefault();
+    axios
+      .delete("/api/trips/delete/" + this.state.trip.id)
+      .then(res => {
+        console.log("Result:", res);
+        /*         this.props.history.replace("/trips");
+         */
+        /*         window.location("/trips");
+         */ this.props.history.push("/trips");
+      })
+      .catch(err => console.log("ERROR:", err));
+  }
+  /* editTrip(event) {
+    event.preventDefault();
+    axios
+      .put("/edit/" + this.state.trip)
+      .then(res => console.log("Result:", res))
+      .catch(err => console.log("ERROR:", err)); */
+
+  /* window.location.reload();
+
+    this.props.history.push("/");} */
+
   render() {
     console.log(this.state.trip);
     return (
       <div className="tripDetailsContainer">
         <div className="detailsImg">
-          <img
-            src={"http://localhost:3000/images/" + this.state.trip.image}
-            alt=""
-          />
+          <img src={"http://localhost:5000/" + this.state.trip.image} alt="" />
         </div>
         <div className="infoGlavni">
           <div className="faDiv">
@@ -56,6 +90,12 @@ export class TripDetails extends Component {
         <div className="tripDescription">
           <p>{this.state.trip.description}</p>
         </div>
+        <button className="bookNow" onClick={this.deleteTrip}>
+          Delete
+        </button>
+        <button className="bookNow" onClick={this.editTrip}>
+          Edit
+        </button>
         <button className="bookNow">BOOK NOW</button>
       </div>
     );

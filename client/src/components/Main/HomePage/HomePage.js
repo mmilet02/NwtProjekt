@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
+import GoogleMap from "../../GoogleMap";
 
 export class HomePage extends Component {
   constructor() {
@@ -46,6 +47,7 @@ export class HomePage extends Component {
           </p>
         </div>
         <div className="bestTrips">{trips}</div>
+        <GoogleMap />
       </div>
     );
   }

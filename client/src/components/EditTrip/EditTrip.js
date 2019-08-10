@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import "./CreateTrip.css";
-import TimePicker from "rc-time-picker";
-import axios from "axios";
-import DatePicker from "react-datepicker";
-
-import "rc-time-picker/assets/index.css";
-
-import "react-datepicker/dist/react-datepicker.css";
+/* import "./CreateTrip.css";
+ */ /* import TimePicker from "rc-time-picker";
+ */ import axios from "axios";
 
 class CreateTrip extends Component {
   constructor(props) {
@@ -14,16 +9,39 @@ class CreateTrip extends Component {
     this.state = {
       name: "",
       description: "",
+      start_date: "",
+      end_date: "",
       start_hour: "",
       end_hour: "",
       space: "",
       price: "",
-      location: "",
-      tripImage: ""
+      image: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  componentWillMount() {
+    let id = +this.props.match.params.id;
+    axios
+      .get("/api/trips/show/" + id)
+      .then(res => {
+        console.log("trip fetched", res.data);
+        this.setState({
+          name: res.data.name,
+          description: res.data.description,
+          start_date: res.data.start_date,
+          end_date: res.data.end_date,
+          start_hour: res.data.start_hour,
+          end_hour: res.data.end_hour,
+          space: res.data.space,
+          price: res.data.price,
+          image: res.data.image
+        });
+      })
+      .catch(err => {
+        console.log("ERROR", err);
+      });
   }
 
   handleChange(e) {
@@ -33,43 +51,17 @@ class CreateTrip extends Component {
       [name]: value
     });
   }
-  handleDateChange(dateName, dateValue) {
-    this.setState({
-      ...this.state,
-      [dateName]: dateValue
-    });
-  }
-
-  fileChanged = event => {
-    console.log(event.target.files[0]);
-    this.setState({
-      ...this.state,
-      tripImage: event.target.files[0]
-    });
-  };
 
   submitForm(e) {
     e.preventDefault();
-    let data = new FormData();
+    console.log(e);
     console.log("SUBMITTING THE FORM");
-    data.append("name", this.state.name);
-    data.append("description", this.state.description);
-    data.append("start_hour", this.state.start_hour);
-    data.append("end_hour", this.state.end_hour);
-    data.append("space", this.state.space);
-    data.append("price", this.state.price);
-    data.append("tripImage", this.state.tripImage, "tripImage");
-    data.append("location", this.state.location);
-
     axios
-      .post("/api/trips", data)
+      .post("/api/trips/edit" + this.state.id, this.state)
       .then(res => {
         console.log("Success");
-        console.log(res);
-        this.props.history.push("/trips");
-        /*   window.location.reload();
-
-        this.props.history.push("/"); */
+        /*       window.location();
+         */
       })
       .catch(err => {
         console.log("Error", err);
@@ -86,11 +78,7 @@ class CreateTrip extends Component {
           </p>
         </div>
 
-        <form
-          className="form"
-          onSubmit={this.submitForm}
-          encType="multipart/form-data"
-        >
+        <form className="form" onSubmit={this.submitForm}>
           <label>
             <input
               className="user_input"
@@ -111,36 +99,26 @@ class CreateTrip extends Component {
               onChange={this.handleChange}
             />
           </label>
-          {/* <div>
-            <DatePicker
+          <label>
+            <input
               className="user_input"
-              placeholderText="Starting date"
-              value={this.state.startDate}
-              selected={this.state.startDate}
-              onChange={date => this.handleDateChange("startDate", date)}
+              type="date"
+              placeholder="Starting date"
+              name="start_date"
+              value={this.state.start_date}
+              onChange={this.handleChange}
             />
-            <DatePicker
+          </label>
+          <label>
+            <input
               className="user_input"
-              placeholderText="Ending date"
-              value={this.state.endDate}
-              selected={this.state.endDate}
-              onChange={date => this.handleDateChange("endDate", date)}
+              type="date"
+              placeholder="Ending date"
+              name="end_date"
+              value={this.state.end_date}
+              onChange={this.handleChange}
             />
-          </div> */}
-          <div>
-            <TimePicker
-              placeholder="Starting time"
-              showSecond={false}
-              onChange={time => this.handleDateChange("start_hour", time)}
-              format="HH:mm"
-            />
-            <TimePicker
-              placeholder="Ending time"
-              showSecond={false}
-              onChange={time => this.handleDateChange("end_hour", time)}
-            />
-          </div>
-
+          </label>
           <label>
             <input
               className="user_input"
@@ -154,10 +132,10 @@ class CreateTrip extends Component {
           <label>
             <input
               className="user_input"
-              type="text"
-              placeholder="Location"
-              name="location"
-              value={this.state.location}
+              type="time"
+              placeholder="Starting hour"
+              name="start_hour"
+              value={this.state.start_hour}
               onChange={this.handleChange}
             />
           </label>
@@ -172,19 +150,30 @@ class CreateTrip extends Component {
               onChange={this.handleChange}
             />
           </label>
-
           <label>
-            Select a tripImage that describes your trip the best
             <input
               className="user_input"
-              type="file"
-              name="tripImage"
-              /*               value={this.state.tripImage}
-               */ onChange={this.fileChanged}
+              type="time"
+              placeholder="Ending hour"
+              name="end_hour"
+              value={this.state.end_hour}
+              onChange={this.handleChange}
+              id="date"
             />
           </label>
 
-          <button className="createButton" onSubmit={this.submitForm}>
+          <label>
+            Select an image that describes your trip the best
+            <input
+              className="user_input"
+              type="file"
+              name="image"
+              value={this.state.image}
+              onChange={this.handleChange}
+            />
+          </label>
+
+          <button className="createButton" onClick={this.submitForm}>
             CREATE
           </button>
         </form>

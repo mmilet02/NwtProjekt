@@ -12,28 +12,34 @@ export class TripList extends Component {
   }
 
   componentWillMount() {
-    let trips = require("../../../trips.json");
+    /* let trips = require("../../../trips.json");
     console.log(trips);
     this.setState({
       ...this.state,
       trips: trips
-    });
+    }); */
 
     axios
       .get("/api/trips")
-      .then(res => console.log("Success", res))
+      .then(res => {
+        console.log("Success", res);
+        this.setState({
+          ...this.state,
+          trips: res.data
+        });
+      })
       .catch(err => console.log("Error", err));
   }
   render() {
     console.log(this.state.trips);
     let trips = this.state.trips.map(trip => {
       return (
-        <div key={trip.trip_id} className="tripp">
+        <div key={trip.id} className="tripp">
           <div className="tripImage">
-            <Link to={"/post/" + trip.trip_id}>
+            <Link to={"/trip/" + trip.id}>
               <img
                 className="trippImage"
-                src={"http://localhost:3000/images/" + trip.image}
+                src={"http://localhost:5000/" + trip.image}
                 alt=""
               />
             </Link>
@@ -45,7 +51,7 @@ export class TripList extends Component {
               <p>Price : {trip.price} €</p>
               <p>Tickets left : {trip.freeSpace}</p>
               <p>Duration : {trip.duration} days</p>
-              <Link to={"/post/" + trip.trip_id}>
+              <Link to={"/trip/" + trip.id}>
                 <div className="buttonDetails">
                   <p>More details</p>
                 </div>
