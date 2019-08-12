@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "./TripDetails.css";
-import axios from "axios";
 import { Link } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { fetchSingleTrip, deleteTrip } from "../../../actions/tripActions";
 
@@ -19,20 +17,6 @@ export class TripDetails extends Component {
   deleteTrip(event) {
     event.preventDefault();
     this.props.deleteTrip(this.props.trip.id);
-  }
-  editTrip(event) {
-    event.preventDefault();
-    axios
-      .put("/edit/" + this.props.trip)
-      .then(res => console.log("Result:", res))
-      .catch(err =>
-        console.log("ERROR:", err)
-      ); /*
-    this.props.history.push("/");
-    */
-
-    /*     window.location.reload();
-     */
   }
 
   render() {

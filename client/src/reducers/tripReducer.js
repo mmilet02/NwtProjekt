@@ -1,7 +1,8 @@
 import {
   FETCH_TRIPS,
   FETCH_SINGLE_TRIP,
-  DELETE_TRIP
+  DELETE_TRIP,
+  EDIT_TRIP
 } from "../constants/actions";
 
 const initialState = {
@@ -25,6 +26,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         trips: state.trips.filter(trip => trip.id !== action.payload)
+      };
+    case EDIT_TRIP:
+      return {
+        ...state,
+        trip: action.payload
       };
 
     default:

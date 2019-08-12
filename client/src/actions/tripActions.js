@@ -1,10 +1,10 @@
 import {
   FETCH_TRIPS,
   FETCH_SINGLE_TRIP,
-  DELETE_TRIP
+  DELETE_TRIP,
+  EDIT_TRIP
 } from "../constants/actions";
 import axios from "axios";
-import React, { Component } from "react";
 
 export const fetchTrips = () => dispatch => {
   axios
@@ -29,6 +29,23 @@ export const fetchSingleTrip = id => dispatch => {
       });
     })
     .catch(err => console.log("Ups, something went wrong", err));
+};
+
+export const editTrip = (data, id) => dispatch => {
+  axios
+    .put("/api/trips/edit/" + id, data)
+    .then(res => {
+      console.log("Success");
+      console.log(res);
+      dispatch({
+        type: EDIT_TRIP,
+        payload: data
+      });
+      window.location.href = "/trips";
+    })
+    .catch(err => {
+      console.log("Error", err);
+    });
 };
 
 export const deleteTrip = id => dispatch => {
