@@ -85,7 +85,7 @@ router.post("/", upload.single("tripImage"), (req, res) => {
   };
   Trip.create(data)
     .then(result => {
-      res.send("200 OK ");
+      res.send("200 OK ").json({ result });
     })
     .catch(err => console.log("Error", err));
 });

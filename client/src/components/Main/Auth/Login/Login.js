@@ -2,14 +2,18 @@ import React, { Component } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { userLogin } from "../../../../actions/userActions";
+
 export class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
     this.handleChange = this.handleChange.bind(this);
+    this.formSubmit = this.formSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -19,23 +23,27 @@ export class Login extends Component {
       [name]: value
     });
   }
-  /*  <div>
-          <Link to="/register">Sign up</Link>
-        </div> */
+
+  formSubmit(e) {
+    e.preventDefault();
+    console.log("submitting");
+    console.log(this.state);
+    this.props.userLogin(this.state);
+  }
   render() {
     return (
       <div className="login_page">
         <div className="login_form">
           <h1>Login form:</h1>
           <div className="form_wrapper">
-            <form className="form">
+            <form className="form" onSubmit={this.formSubmit}>
               <label>
                 <input
                   className="userInput"
                   type="text"
                   placeholder="Enter your email"
-                  name="username"
-                  value={this.state.username}
+                  name="email"
+                  value={this.state.email}
                   onChange={this.handleChange}
                 />
               </label>
@@ -52,7 +60,9 @@ export class Login extends Component {
               <label>
                 <input className="checkbox" type="checkbox" /> Remember me
               </label>
-              <button className="login_button">LOGIN</button>
+              <button className="login_button" onClick={this.formSubmit}>
+                LOGIN
+              </button>
               <div className="signup">
                 <Link to="/register" className="signup">
                   Dont have an account? Sign up !
@@ -66,4 +76,7 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(
+  null,
+  { userLogin }
+)(Login);

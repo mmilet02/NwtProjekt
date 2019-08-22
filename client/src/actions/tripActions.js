@@ -18,8 +18,11 @@ export const fetchTrips = () => dispatch => {
     .catch(err => console.log("ERROR", err));
 };
 
-export const fetchSingleTrip = id => dispatch => {
-  console.log(id);
+export const fetchSingleTrip = id => (dispatch, getState) => {
+  /*  const { state } = getState();
+  console.log(getState().tripReducer.trips);
+  problem ako korisnik bez loadanja svih tripiova dode samo na jedan koji ima bookmarkan->nece mu ga pokazat
+  */
   axios
     .get("/api/trips/show/" + id)
     .then(res => {

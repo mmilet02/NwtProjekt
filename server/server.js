@@ -23,6 +23,8 @@ database
 app.use;
 
 const trips = require("./routes/api/trips");
+const users = require("./routes/api/users");
 app.use("/api/trips", trips);
+app.use("/api/users", users);
 
 app.listen(port, () => console.log(`listening on port ${port}`));

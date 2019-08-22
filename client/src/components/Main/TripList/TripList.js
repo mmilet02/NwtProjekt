@@ -11,6 +11,7 @@ export class TripList extends Component {
     this.props.fetchTrips();
   }
   render() {
+    console.log(this.props.trips);
     let trips = this.props.trips.map(trip => {
       return (
         <div key={trip.id} className="tripp">

@@ -2,18 +2,26 @@ import React, { Component } from "react";
 import "./NavBar.css";
 import { Link } from "react-router-dom";
 
+import { userLogout } from "../../actions/userActions";
+import { connect } from "react-redux";
+
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: true
-    };
-  }
+  /*  constructor(props) {
+    super(props); */
+  /*  this.state = {
+      isLoggedIn: false
+    }; */
+  //  }
+
+  logout = e => {
+    e.preventDefault();
+    this.props.userLogout();
+  };
   render() {
     return (
       <header className="second_header">
         <div className="firstHeaderPart">
-          {this.state.isLoggedIn ? (
+          {this.props.isLoggedIn ? (
             <div className="ifLogin">
               <div>
                 <Link to="/favorite">
@@ -28,7 +36,7 @@ class Navbar extends Component {
               <div>
                 <Link to="/profile">Profile</Link>
               </div>
-              <div>Logout</div>
+              <div onClick={this.logout}>Logout</div>
             </div>
           ) : (
             <div className="ifLogin">
@@ -61,34 +69,6 @@ class Navbar extends Component {
           </div>
         </div>
 
-        {/* <div className="secondHeaderPart">
-          <Link to="/">MM ~ TOURS</Link>
-        </div>
-
-        <div className="thirdHeaderPart">
-          <div className="partOfThirdHeaderPart">
-            <div className="h">
-              <Link to="/trips">JEDNODNEVNI</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">VIŠEDNEVNI</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">EXTREME</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">ZA DJECU</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">ZA PAROVE</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">MARIO</Link>
-            </div>
-          </div>
-
-        </div> */}
-
         {/* <div>
           <Link to="/">Logo</Link>
         </div>
@@ -118,5 +98,12 @@ class Navbar extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  user: state.userReducer.user,
+  isLoggedIn: state.userReducer.isLoggedIn
+});
 
-export default Navbar;
+export default connect(
+  mapStateToProps,
+  { userLogout }
+)(Navbar);

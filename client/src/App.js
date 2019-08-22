@@ -15,8 +15,14 @@ import EditTrip from "./components/EditTrip/EditTrip";
 
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { userLoaded } from "./actions/userActions";
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(userLoaded());
+
+    console.log("app MOUNTED");
+  }
   render() {
     return (
       <Router>
