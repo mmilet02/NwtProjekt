@@ -6,23 +6,42 @@ import { userLogout } from "../../actions/userActions";
 import { connect } from "react-redux";
 
 class Navbar extends Component {
-  /*  constructor(props) {
-    super(props); */
-  /*  this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       isLoggedIn: false
-    }; */
-  //  }
+    };
+  }
 
   logout = e => {
     e.preventDefault();
     this.props.userLogout();
   };
+  componentDidMount() {
+    this.setState({
+      isLoggedIn: this.props.isLoggedIn
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    //Typical usage, don't forget to compare the props
+    /*   console.log(prevProps);
+    if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
+      this.setState({
+        isLoggedIn: this.props.isLoggedIn
+      });
+    } */
+  }
+
   render() {
+    console.log(this.props);
     return (
       <header className="second_header">
         <div className="firstHeaderPart">
           {this.props.isLoggedIn ? (
             <div className="ifLogin">
+              {/*               <h4>Welcome {this.props.user.user.fullname}</h4>
+               */}{" "}
               <div>
                 <Link to="/favorite">
                   <i className="fas fa-heart fa-lg" />
@@ -34,7 +53,13 @@ class Navbar extends Component {
                 </Link>
               </div>
               <div>
-                <Link to="/profile">Profile</Link>
+                {this.props.user.user ? (
+                  <Link to="/profile">
+                    Profile - {this.props.user.user.fullname}
+                  </Link>
+                ) : (
+                  <div />
+                )}
               </div>
               <div onClick={this.logout}>Logout</div>
             </div>

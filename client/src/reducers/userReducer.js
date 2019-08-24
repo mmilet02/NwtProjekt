@@ -1,7 +1,9 @@
 import {
   USER_REGISTER,
   USER_LOGIN,
+  USER_LOGIN_FAIL,
   USER_LOADED,
+  USER_LOADED_FAIL,
   USER_LOGOUT
 } from "../constants/actions";
 
@@ -9,7 +11,7 @@ const initialState = {
   isLoggedIn: false,
   isAuthorized: false,
   token: null,
-  user: {}
+  user: null
 };
 
 export default function(state = initialState, action) {
@@ -24,14 +26,24 @@ export default function(state = initialState, action) {
       };
     case USER_LOADED:
       return {
-        ...state
+        ...state,
+        isLoggedIn: true,
+        user: action.payload
       };
     case USER_LOGOUT:
       return {
         isLoggedIn: false,
         isAuthorized: false,
         token: null,
-        user: {}
+        user: null
+      };
+    case USER_LOADED_FAIL:
+    case USER_LOGIN_FAIL:
+      return {
+        isLoggedIn: false,
+        isAuthorized: false,
+        token: null,
+        user: null
       };
     default:
       return state;

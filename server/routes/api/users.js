@@ -12,25 +12,48 @@ const User = models.User;
  const Trip = models.Trip; 
  */
 router.get("/", auth, (req, res) => {
-  console.log("passed to last fun");
-  res.json({ msg: " OK" });
+  console.log(req.user);
+  User.findOne({
+    where: { email: req.user.email },
+    attributes: ["id", "fullname", "createdAt", "updatedAt", "email"]
+  })
+    .then(user => {
+      console.log(user);
+      return res.json({
+        user: user
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({
+        msg: "User not found"
+      });
+    });
 });
 
 router.post("/register", (req, res) => {
   console.log("!");
   const { fullname, email, password } = req.body;
   if (!fullname || !email || !password) {
-    return res.json({ msg: "All fields required" });
+    return res.status(500).json({
+      msg: "All fields required"
+    });
   }
   User.findOne({ where: { email: email } }).then(user => {
     if (user) {
       //res.status(400);
-      return res.json({ msg: "Email already taken" });
+      return res.status(500).json({
+        msg: "Email already taken"
+      });
     }
     bcrypt.genSalt(10, (err, salt) => {
       if (err) throw err;
       bcrypt.hash(password, salt, (err, hashedPassword) => {
-        if (err) throw err;
+        if (err) {
+          return res.status(500).json({
+            msg: "Enter all fields"
+          });
+        }
         const newUser = { fullname, password: hashedPassword, email };
         User.create(newUser)
           .then(user => {
@@ -45,7 +68,9 @@ router.post("/register", (req, res) => {
               { expiresIn: 3600 },
               (err, token) => {
                 if (err) {
-                  return res.json({ msg: "Something went wrong" });
+                  return res.status(500).json({
+                    msg: "Something went wrong"
+                  });
                 }
                 return res.json({
                   user: { ...userSign },
@@ -66,15 +91,19 @@ router.post("/login", (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.json({ msg: "Enter all fields" });
+    return res.status(500).json({
+      msg: "Enter all fields"
+    });
   }
   User.findOne({ where: { email: email } }).then(user => {
     if (!user) {
-      return res.json({ msg: "Invalid username or password" });
+      return res.status(500).json({
+        msg: "Invalid username or password"
+      });
     }
     bcrypt.compare(password, user.password).then(success => {
       if (!success) {
-        return res.json({ msg: "Invalid username or password" });
+        return res.status(500).json({ msg: "Invalid username or password" });
       }
       const userSign = {
         fullname: user.fullname,
@@ -82,7 +111,9 @@ router.post("/login", (req, res) => {
         id: user.id
       };
       jwt.sign(userSign, "bigSecret", { expiresIn: 3600 }, (err, token) => {
-        if (err) return res.json({ err, msg: "Something went wrong" });
+        if (err) {
+          return res.status(500).json({ msg: "Sth went wrong" });
+        }
         if (!token) {
           return res.json({ msg: "Something went wrong" });
         }

@@ -2,7 +2,9 @@ import {
   USER_LOGIN,
   USER_REGISTER,
   USER_LOGOUT,
-  USER_LOADED
+  USER_LOADED,
+  USER_LOADED_FAIL,
+  USER_LOGIN_FAIL
 } from "../constants/actions";
 import axios from "axios";
 
@@ -11,7 +13,6 @@ export const userLogin = body => dispatch => {
     .post("/api/users/login", body)
     .then(res => {
       console.log(res);
-      console.log(res.data);
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -19,9 +20,17 @@ export const userLogin = body => dispatch => {
         type: USER_LOGIN,
         payload: res.data
       });
+      window.location.href = "/";
     })
     .catch(err => {
-      console.log("Auth failed", err);
+      /*       console.log(err.response.data.msg);
+       */ console.log("ERROR", err);
+      if (err.response) {
+        dispatch({
+          type: USER_LOGIN_FAIL,
+          payload: err.response.data.msg
+        });
+      }
     });
 };
 
@@ -35,6 +44,7 @@ export const userRegister = body => dispatch => {
         type: USER_REGISTER,
         payload: res.data
       });
+      window.location.href = "/";
     })
     .catch(err => {
       console.log("Auth failed", err);
@@ -59,18 +69,24 @@ export const userLoaded = () => dispatch => {
       Authorization: "Bearer " + localStorage.getItem("token")
     }
   };
+
   axios
     .get("/api/users/", config)
     .then(res => {
-      console.log(res);
-      console.log(res.data);
+      console.log("SUCCESS");
       dispatch({
         type: USER_LOADED,
         payload: res.data
       });
     })
     .catch(err => {
-      console.log("Auth failed", err);
+      console.log("Failure", err);
+      if (err.response) {
+        console.log(err.response.data.msg);
+      }
+      dispatch({
+        type: USER_LOADED_FAIL
+      });
     });
 };
 
