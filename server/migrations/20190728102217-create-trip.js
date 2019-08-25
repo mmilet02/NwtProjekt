@@ -42,7 +42,9 @@ module.exports = {
         type: Sequelize.DATE
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        model: "users", // <<< Note, its table's name, not object name
+        key: "id" // <<< Note, its a column name
       }
     });
   },

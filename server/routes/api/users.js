@@ -12,6 +12,13 @@ const auth = require("../../middleware/getToken");
  const Trip = require("../../models/trip"); doesn't work
  const Trip = models.Trip; 
  */
+router.get("/user/:id", (req, res) => {
+  console.log(req.params.id);
+  id = req.params.id;
+  User.findOne({ where: { id: id } }).then(user => {
+    res.send(user);
+  });
+});
 
 router.get("/", auth, (req, res) => {
   console.log(req.user);

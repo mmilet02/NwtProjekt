@@ -3,15 +3,31 @@ import "./TripDetails.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchSingleTrip, deleteTrip } from "../../../actions/tripActions";
+import axios from "axios";
 
 export class TripDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      id: ""
+    };
     this.deleteTrip = this.deleteTrip.bind(this);
   }
 
   componentWillMount() {
+    console.log("mounting");
+    console.log(this.props);
     this.props.fetchSingleTrip(this.props.match.params.id);
+
+    axios
+      .get("/api/users/user/" + this.props.trip.UserId)
+      .then(res => {
+        console.log("user", res);
+        this.setState({
+          id: res.data.id
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   deleteTrip(event) {
@@ -54,12 +70,26 @@ export class TripDetails extends Component {
         <div className="tripDescription">
           <p>{this.props.trip.description}</p>
         </div>
-        <button className="bookNow" onClick={this.deleteTrip}>
-          Delete
-        </button>
-        <Link to={"/edit/" + this.props.trip.id}>
-          <button className="bookNow">Edit</button>
-        </Link>
+        {this.props.isLoggedIn ? (
+          <div>
+            {this.props.trip.UserId === this.props.user.user.id ? (
+              <div>
+                <button className="bookNow" onClick={this.deleteTrip}>
+                  Delete
+                </button>
+                <Link to={"/edit/" + this.props.trip.id}>
+                  <button className="bookNow">Edit</button>
+                </Link>
+              </div>
+            ) : (
+              <p>
+                WHAT {this.props.trip.UserId} and {this.props.user.user.id}
+              </p>
+            )}
+          </div>
+        ) : (
+          <p>Not logged in</p>
+        )}
 
         <button className="bookNow">BOOK NOW</button>
       </div>
@@ -68,7 +98,9 @@ export class TripDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  trip: state.tripReducer.trip
+  trip: state.tripReducer.trip,
+  isLoggedIn: state.userReducer.isLoggedIn,
+  user: state.userReducer.user
 });
 
 export default connect(

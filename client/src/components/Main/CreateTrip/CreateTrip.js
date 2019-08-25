@@ -62,14 +62,21 @@ class CreateTrip extends Component {
       data.append("tripImage", this.state.tripImage, "tripImage");
     }
     data.append("location", this.state.location);
-
+    let config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
     axios
-      .post("/api/trips", data)
+      .post("/api/trips", data, config)
       .then(res => {
         console.log("Success");
         console.log(res);
         /*         this.props.history.push("/trips");
-         */ window.location.reload();
+        window.location.reload();
+         */
+
+        window.location.href = "/trips";
 
         /*         this.props.history.push("/");
          */

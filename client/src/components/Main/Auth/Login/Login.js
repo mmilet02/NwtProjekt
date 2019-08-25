@@ -3,7 +3,7 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { userLogin } from "../../../../actions/userActions";
+import { userLogin, clearningErrors } from "../../../../actions/userActions";
 
 export class Login extends Component {
   constructor() {
@@ -44,7 +44,7 @@ export class Login extends Component {
     return true;
   }
   componentDidMount() {
-    console.log("CLEARNING ERORRS HEHE");
+    this.props.clearningErrors();
   }
 
   formSubmit(e) {
@@ -94,10 +94,8 @@ export class Login extends Component {
               {this.state.passwordError ? (
                 <p>{this.state.passwordError}</p>
               ) : null}
+              {this.props.errorMsg ? <p>{this.props.errorMsg}</p> : null}
 
-              {/*   <label>
-                <input className="checkbox" type="checkbox" /> Remember me
-              </label> */}
               <button className="login_button" onClick={this.formSubmit}>
                 LOGIN
               </button>
@@ -114,7 +112,11 @@ export class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  errorMsg: state.userReducer.errorMsg
+});
+
 export default connect(
-  null,
-  { userLogin }
+  mapStateToProps,
+  { userLogin, clearningErrors }
 )(Login);

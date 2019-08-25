@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const multer = require("multer");
-
+const getToken = require("../../middleware/getToken");
 const MIME_TYPE = {
   "image/jpeg": ".jpg",
   "image/jpg": ".jpg",
@@ -59,7 +59,7 @@ router.get("/", (req, res) => {
     .catch(err => console.log("Error", err));
 });
 
-router.post("/", upload.single("tripImage"), (req, res) => {
+router.post("/", upload.single("tripImage"), getToken, (req, res) => {
   console.log(req.file);
   console.log(req.body);
   let data = ({
@@ -81,7 +81,8 @@ router.post("/", upload.single("tripImage"), (req, res) => {
   data = {
     ...data,
     freespace: space,
-    price: +req.body.price
+    price: +req.body.price,
+    UserId: req.user.userSign.id
   };
   Trip.create(data)
     .then(result => {
