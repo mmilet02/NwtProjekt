@@ -4,17 +4,20 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const models = require("../../models/index");
-const auth = require("../../middleware/getToken");
 const User = models.User;
 
+const auth = require("../../middleware/getToken");
+
 /* const models = require("../../models/index");
- const Trip = require("../../models/trip"); doesn't work, dunno why
+ const Trip = require("../../models/trip"); doesn't work
  const Trip = models.Trip; 
  */
+
 router.get("/", auth, (req, res) => {
   console.log(req.user);
+  console.log(req.user.email);
   User.findOne({
-    where: { email: req.user.email },
+    where: { email: req.user.userSign.email },
     attributes: ["id", "fullname", "createdAt", "updatedAt", "email"]
   })
     .then(user => {
@@ -41,9 +44,8 @@ router.post("/register", (req, res) => {
   }
   User.findOne({ where: { email: email } }).then(user => {
     if (user) {
-      //res.status(400);
       return res.status(500).json({
-        msg: "Email already taken"
+        msg: "Email already in use"
       });
     }
     bcrypt.genSalt(10, (err, salt) => {
@@ -51,7 +53,7 @@ router.post("/register", (req, res) => {
       bcrypt.hash(password, salt, (err, hashedPassword) => {
         if (err) {
           return res.status(500).json({
-            msg: "Enter all fields"
+            msg: "Server Error, please try again later"
           });
         }
         const newUser = { fullname, password: hashedPassword, email };
@@ -69,7 +71,7 @@ router.post("/register", (req, res) => {
               (err, token) => {
                 if (err) {
                   return res.status(500).json({
-                    msg: "Something went wrong"
+                    msg: "Server error, try again later"
                   });
                 }
                 return res.json({
@@ -81,6 +83,9 @@ router.post("/register", (req, res) => {
           })
           .catch(err => {
             console.log(err);
+            return res.status(500).json({
+              msg: "Server error - User not created, try again later"
+            });
           });
       });
     });
@@ -110,12 +115,12 @@ router.post("/login", (req, res) => {
         email: user.email,
         id: user.id
       };
-      jwt.sign(userSign, "bigSecret", { expiresIn: 3600 }, (err, token) => {
+      jwt.sign({ userSign }, "bigSecret", { expiresIn: 3600 }, (err, token) => {
         if (err) {
-          return res.status(500).json({ msg: "Sth went wrong" });
+          return res.status(500).json({ msg: "Server error, try again later" });
         }
         if (!token) {
-          return res.json({ msg: "Something went wrong" });
+          return res.json({ msg: "Server error, try again later" });
         }
         return res.json({
           user: { ...userSign },

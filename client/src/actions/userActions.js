@@ -4,7 +4,9 @@ import {
   USER_LOGOUT,
   USER_LOADED,
   USER_LOADED_FAIL,
-  USER_LOGIN_FAIL
+  USER_LOGIN_FAIL,
+  USER_REGISTER_FAIL,
+  CLEAR_ERRORS
 } from "../constants/actions";
 import axios from "axios";
 
@@ -20,11 +22,10 @@ export const userLogin = body => dispatch => {
         type: USER_LOGIN,
         payload: res.data
       });
-      window.location.href = "/";
+      window.location.href = "/profile";
     })
     .catch(err => {
-      /*       console.log(err.response.data.msg);
-       */ console.log("ERROR", err);
+      console.log("ERROR", err);
       if (err.response) {
         dispatch({
           type: USER_LOGIN_FAIL,
@@ -40,14 +41,24 @@ export const userRegister = body => dispatch => {
     .then(res => {
       console.log(res);
       console.log(res.data);
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
       dispatch({
         type: USER_REGISTER,
         payload: res.data
       });
-      window.location.href = "/";
+      window.location.href = "/profile";
     })
     .catch(err => {
       console.log("Auth failed", err);
+      if (err.response) {
+        console.log(err.response.data);
+        dispatch({
+          type: USER_REGISTER_FAIL,
+          payload: err.response.data.msg
+        });
+      }
     });
 };
 export const userLogout = () => dispatch => {
@@ -55,6 +66,13 @@ export const userLogout = () => dispatch => {
   dispatch({
     type: USER_LOGOUT
   });
+  window.location.href = "/";
+};
+
+export const clearningErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };
 
 /* export const userLogout = () => {
@@ -89,16 +107,3 @@ export const userLoaded = () => dispatch => {
       });
     });
 };
-
-/* export const deleteTrip = id => dispatch => {
-    axios
-      .delete("/api/trips/delete/" + id)
-      .then(res => {
-        dispatch({
-          type: DELETE_TRIP,
-          payload: id
-        });
-        window.location.href = "/trips";
-      })
-      .catch(err => console.log("Ups, something went wrong", err));
-  }; */

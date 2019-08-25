@@ -11,26 +11,17 @@ class Navbar extends Component {
     this.state = {
       isLoggedIn: false
     };
+    this.logout = this.logout.bind(this);
   }
 
-  logout = e => {
+  logout(e) {
     e.preventDefault();
     this.props.userLogout();
-  };
+  }
   componentDidMount() {
     this.setState({
       isLoggedIn: this.props.isLoggedIn
     });
-  }
-
-  componentDidUpdate(prevProps) {
-    //Typical usage, don't forget to compare the props
-    /*   console.log(prevProps);
-    if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
-      this.setState({
-        isLoggedIn: this.props.isLoggedIn
-      });
-    } */
   }
 
   render() {

@@ -3,15 +3,18 @@ import "./Register.css";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { userRegister } from "../../../../actions/userActions";
+import { userRegister, clearningErrors } from "../../../../actions/userActions";
 
 export class Register extends Component {
   constructor() {
     super();
     this.state = {
       fullname: "",
+      fullnameError: "",
       email: "",
-      password: ""
+      emailError: "",
+      password: "",
+      passwordError: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
@@ -23,12 +26,49 @@ export class Register extends Component {
       [name]: value
     });
   }
-
+  validate() {
+    if (!this.state.email.includes("@")) {
+      this.setState({
+        ...this.state,
+        emailError: "Email must include @"
+      });
+      return false;
+    } else if (this.state.password.length < 5) {
+      this.setState({
+        ...this.state,
+        emailError: "",
+        passwordError: "Password needs to be atleast 6 characters long"
+      });
+      return false;
+    } else if (this.state.fullname.length < 3) {
+      this.setState({
+        ...this.state,
+        emailError: "",
+        passwordError: "",
+        fullnameError: "Please enter your full name"
+      });
+      return false;
+    }
+    this.setState({
+      ...this.state,
+      fullnameError: "",
+      emailError: "",
+      passwordError: ""
+    });
+    return true;
+  }
   formSubmit(e) {
     e.preventDefault();
     console.log("submitting register");
     console.log(this.state);
-    this.props.userRegister(this.state);
+    const isValid = this.validate();
+    if (isValid) {
+      this.props.userRegister(this.state);
+    }
+  }
+
+  componentDidMount() {
+    this.props.clearningErrors();
   }
 
   render() {
@@ -48,6 +88,9 @@ export class Register extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+              {this.state.fullnameError ? (
+                <p>{this.state.fullnameError}</p>
+              ) : null}
               <label>
                 <input
                   className="userInput"
@@ -58,6 +101,8 @@ export class Register extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+              {this.state.emailError ? <p>{this.state.emailError}</p> : null}
+
               <label>
                 <input
                   className="userInput"
@@ -68,10 +113,15 @@ export class Register extends Component {
                   onChange={this.handleChange}
                 />
               </label>
+              {this.state.passwordError ? (
+                <p>{this.state.passwordError}</p>
+              ) : null}
+
               <label>
                 <input className="checkbox" type="checkbox" /> I have read and
                 accept the terms of use
               </label>
+              {this.props.errorMsg ? <p>{this.props.errorMsg}</p> : null}
               <button className="login_button" onClick={this.formSubmit}>
                 REGISTER
               </button>
@@ -88,7 +138,11 @@ export class Register extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  errorMsg: state.userReducer.errorMsg
+});
+
 export default connect(
-  null,
-  { userRegister }
+  mapStateToProps,
+  { userRegister, clearningErrors }
 )(Register);
