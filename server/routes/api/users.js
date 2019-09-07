@@ -16,19 +16,21 @@ router.get("/user/:id", (req, res) => {
   console.log(req.params.id);
   id = req.params.id;
   User.findOne({ where: { id: id } }).then(user => {
-    res.send(user);
+    console.log(user);
+    return res.json({
+      user: user
+    });
   });
 });
 
 router.get("/", auth, (req, res) => {
   console.log(req.user);
-  console.log(req.user.email);
   User.findOne({
-    where: { email: req.user.userSign.email },
+    where: { email: req.user.email },
     attributes: ["id", "fullname", "createdAt", "updatedAt", "email"]
   })
     .then(user => {
-      console.log(user);
+      console.log("SENT USER", user);
       return res.json({
         user: user
       });
@@ -72,7 +74,7 @@ router.post("/register", (req, res) => {
               id: user.id
             };
             jwt.sign(
-              { userSign },
+              userSign,
               "bigSecret",
               { expiresIn: 3600 },
               (err, token) => {
@@ -122,7 +124,7 @@ router.post("/login", (req, res) => {
         email: user.email,
         id: user.id
       };
-      jwt.sign({ userSign }, "bigSecret", { expiresIn: 3600 }, (err, token) => {
+      jwt.sign(userSign, "bigSecret", { expiresIn: 3600 }, (err, token) => {
         if (err) {
           return res.status(500).json({ msg: "Server error, try again later" });
         }

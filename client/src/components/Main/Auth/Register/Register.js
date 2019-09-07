@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { userRegister, clearningErrors } from "../../../../actions/userActions";
@@ -64,6 +64,7 @@ export class Register extends Component {
     const isValid = this.validate();
     if (isValid) {
       this.props.userRegister(this.state);
+      this.props.history.push("/profile");
     }
   }
 
@@ -72,6 +73,9 @@ export class Register extends Component {
   }
 
   render() {
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/profile" />;
+    }
     return (
       <div className="register_page">
         <div className="login_form">
@@ -139,10 +143,11 @@ export class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-  errorMsg: state.userReducer.errorMsg
+  errorMsg: state.userReducer.errorMsg,
+  isLoggedIn: state.userReducer.isLoggedIn
 });
 
 export default connect(
   mapStateToProps,
   { userRegister, clearningErrors }
-)(Register);
+)(withRouter(Register));

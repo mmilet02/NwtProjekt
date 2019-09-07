@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { userLogin, clearningErrors } from "../../../../actions/userActions";
@@ -61,9 +61,15 @@ export class Login extends Component {
       console.log(this.state);
       console.log("form submited");
       this.props.userLogin(this.state);
+      console.log(this.props.history);
+      /*       this.props.history.push("/profile");
+       */
     }
   }
   render() {
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/profile" />;
+    }
     return (
       <div className="login_page">
         <div className="login_form">
@@ -113,10 +119,11 @@ export class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  errorMsg: state.userReducer.errorMsg
+  errorMsg: state.userReducer.errorMsg,
+  isLoggedIn: state.userReducer.isLoggedIn
 });
 
 export default connect(
   mapStateToProps,
   { userLogin, clearningErrors }
-)(Login);
+)(withRouter(Login));

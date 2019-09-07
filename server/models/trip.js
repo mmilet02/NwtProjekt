@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       end_hour: DataTypes.TIME,
       location: DataTypes.STRING,
       price: DataTypes.DOUBLE,
-      image: DataTypes.STRING
+      image: DataTypes.STRING,
+      likes: DataTypes.ARRAY(DataTypes.JSON),
+      comments: DataTypes.ARRAY(DataTypes.JSON),
+      createdBy: DataTypes.STRING
     },
 
     {}

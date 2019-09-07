@@ -12,7 +12,7 @@ import {
 const initialState = {
   isLoggedIn: false,
   user: null,
-  errorerrorMsg: null
+  errorMsg: null
 };
 
 export default function(state = initialState, action) {
@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
-        user: action.payload.user
+        user: action.payload
       };
     case USER_LOADED:
       return {

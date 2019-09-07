@@ -8,9 +8,6 @@ import { connect } from "react-redux";
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoggedIn: false
-    };
     this.logout = this.logout.bind(this);
   }
 
@@ -18,52 +15,41 @@ class Navbar extends Component {
     e.preventDefault();
     this.props.userLogout();
   }
-  componentDidMount() {
-    this.setState({
-      isLoggedIn: this.props.isLoggedIn
-    });
-  }
 
   render() {
-    console.log(this.props);
+    console.log("CGnsdnsdnsdn", this.props);
+    const { user, isLoggedIn } = this.props;
+    console.log("USERR", user);
     return (
       <header className="second_header">
         <div className="firstHeaderPart">
-          {this.props.isLoggedIn ? (
-            <div className="ifLogin">
-              {/*               <h4>Welcome {this.props.user.user.fullname}</h4>
-               */}{" "}
-              <div>
-                <Link to="/favorite">
-                  <i className="fas fa-heart fa-lg" />
-                </Link>
-              </div>
-              <div>
-                <Link to="/createTrip">
-                  <i className="fas fa-plus fa-lg" />
-                </Link>
-              </div>
-              <div>
-                {this.props.user.user ? (
-                  <Link to="/profile">
-                    Profile - {this.props.user.user.fullname}
+          <div>
+            {isLoggedIn ? (
+              <div className="ifLogin">
+                <div>
+                  <Link to="/favorite">
+                    <i className="fas fa-heart fa-lg" />
                   </Link>
-                ) : (
-                  <div />
-                )}
+                </div>
+                <div>
+                  <Link to="/createTrip">
+                    <i className="fas fa-plus fa-lg" />
+                  </Link>
+                </div>
+                <Link to="/profile">Profile - {user.fullname}</Link>
+                <div onClick={this.logout}>Logout</div>
               </div>
-              <div onClick={this.logout}>Logout</div>
-            </div>
-          ) : (
-            <div className="ifLogin">
-              <div>
-                <Link to="/login">Login</Link>
+            ) : (
+              <div className="ifLogin">
+                <div>
+                  <Link to="/login">Login</Link>
+                </div>
+                <div>
+                  <Link to="/register">Register</Link>
+                </div>
               </div>
-              <div>
-                <Link to="/register">Register</Link>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="secondHeaderPart">
@@ -84,32 +70,6 @@ class Navbar extends Component {
             </div>
           </div>
         </div>
-
-        {/* <div>
-          <Link to="/">Logo</Link>
-        </div>
-        <nav>
-          <div className=" header mm">
-            <Link to="/trips">Trips</Link>
-          </div>
-          {this.state.isLoggedIn ? (
-            <div className="header m ">
-              <div>
-                <Link to="/profile">Profile</Link>
-              </div>
-              <div >Logout</div>
-            </div>
-          ) : (
-              <div className="header m">
-                <div>
-                  <Link to="/login">Login</Link>
-                </div>
-                <div>
-                  <Link to="/register">Register</Link>
-                </div>
-              </div>
-            )}
-        </nav> */}
       </header>
     );
   }

@@ -1,27 +1,43 @@
 import React, { Component } from "react";
 import "./TripCard.css";
 import { Link } from "react-router-dom";
-
-import axios from "axios";
+import { connect } from "react-redux";
+import Popup from "reactjs-popup";
+import { addLike } from "../../../actions/tripActions";
 
 export class TripCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: ""
+      show: false,
+      likes: []
     };
+    this.liked = this.liked.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
-  componentWillMount() {
-    axios
-      .get("/api/users/user/" + this.props.trip.UserId)
-      .then(res => {
-        console.log("user", res);
-        this.setState({
-          user: res.data.fullname
-        });
-      })
-      .catch(err => console.log(err));
+  liked() {
+    console.log("LIKED");
+    this.props.addLike(this.props.trip.id);
+    console.log(this.state);
+    /*  this.setState({
+      ...this.state,
+      likes: this.state.likes.push({ userName: "something" })
+    }); */
+  }
+
+  handleClose() {
+    this.setState({
+      ...this.state,
+      show: !this.state.show
+    });
+  }
+
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      likes: this.props.trip.likes
+    });
   }
 
   render() {
@@ -45,7 +61,10 @@ export class TripCard extends Component {
             <p>Price : {trip.price} €</p>
             <p>Tickets left : {trip.freeSpace}</p>
             <p>Duration : {trip.duration} days</p>
-            <p>Created by: {this.state.user}</p>
+            <p>
+              Created by:
+              <Link to={"/profile/user/" + trip.UserId}> {trip.createdBy}</Link>
+            </p>
             <Link to={"/trip/" + trip.id}>
               <div className="buttonDetails">
                 <p>More details</p>
@@ -54,6 +73,23 @@ export class TripCard extends Component {
           </div>
           <div className="infoFav">
             <i className="fas fa-heart fa-lg" />
+            <div>
+              Liked by
+              <Popup
+                trigger={<button> {this.props.trip.likes.length}</button>}
+                position="right center"
+                modal
+                closeOnDocumentClick
+              >
+                <div>User that liked it...</div>
+                {trip.likes.map(singleLike => {
+                  return <div>{singleLike.userName}</div>;
+                })}
+              </Popup>
+            </div>
+            <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
+              LIKE
+            </button>
           </div>
         </div>
       </div>
@@ -61,4 +97,11 @@ export class TripCard extends Component {
   }
 }
 
-export default TripCard;
+const mapStateToProps = state => ({
+  isLoggedIn: state.userReducer.isLoggedIn
+});
+
+export default connect(
+  mapStateToProps,
+  { addLike }
+)(TripCard);

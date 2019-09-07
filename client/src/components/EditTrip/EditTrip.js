@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./EditTrip.css";
 import TimePicker from "rc-time-picker";
 import { editTrip } from "../../actions/tripActions";
+import { withRouter } from "react-router-dom";
+
 import { connect } from "react-redux";
 import moment from "moment";
 
@@ -20,8 +22,10 @@ class EditTrip extends Component {
       space: this.props.trip.freespace ? this.props.trip.freespace : "",
       price: this.props.trip.price ? this.props.trip.price : "",
       location: this.props.trip.location ? this.props.trip.location : "",
+      id: this.props.trip.id,
       tripImage: ""
     };
+    console.log(this.props);
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -50,6 +54,8 @@ class EditTrip extends Component {
   };
 
   submitForm(e) {
+    console.log(this.props);
+    console.log(this.state.id);
     e.preventDefault();
     let data = new FormData();
     data.append("name", this.state.name);
@@ -62,7 +68,10 @@ class EditTrip extends Component {
       data.append("tripImage", this.state.tripImage, "tripImage");
     }
     data.append("location", this.state.location);
-    this.props.editTrip(data, this.props.trip.id);
+    this.props.editTrip(data, this.state.id);
+    // zasto mi ode this.props.trip bude prazan objekt a u constructoru ne
+    /*     this.props.history.push("/trips");
+     */
   }
 
   render() {
@@ -169,4 +178,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { editTrip }
-)(EditTrip);
+)(withRouter(EditTrip));

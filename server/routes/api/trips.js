@@ -78,11 +78,17 @@ router.post("/", upload.single("tripImage"), getToken, (req, res) => {
     };
   }
   let space = +req.body.space;
+  let createdBy = req.user.fullname;
+  let likes = [];
+  let comments = [];
   data = {
     ...data,
     freespace: space,
     price: +req.body.price,
-    UserId: req.user.userSign.id
+    UserId: req.user.id,
+    createdBy: createdBy,
+    likes: likes,
+    comments: comments
   };
   Trip.create(data)
     .then(result => {
@@ -99,8 +105,48 @@ router.get("/show/:id", (req, res) => {
   });
 });
 
+router.post("/like/:id", getToken, (req, res) => {
+  const id = req.params.id;
+  Trip.findOne({ where: { id: id } }).then(trip => {
+    console.log(trip.dataValues);
+    trip.dataValues.likes.push({
+      userName: req.user.fullname,
+      id: req.user.id,
+      userProfileImage: "what"
+    });
+
+    Trip.update(trip.dataValues, { where: { id: id } })
+      .then(updatedTrip => {
+        res.json({ trip });
+      })
+      .catch(err => console.log("ERROR", err));
+  });
+});
+
+router.post("/comment/:id", getToken, (req, res) => {
+  const id = req.params.id;
+  console.log(req.body);
+  Trip.findOne({ where: { id: id } }).then(trip => {
+    console.log(trip.dataValues);
+    const comment = {
+      userName: req.user.fullname,
+      id: req.user.id,
+      userProfileImage: "what",
+      comment: req.body.comment
+    };
+    trip.dataValues.comments.push(comment);
+
+    Trip.update(trip.dataValues, { where: { id: id } })
+      .then(updatedTrip => {
+        res.json({ comment });
+      })
+      .catch(err => console.log("ERROR", err));
+  });
+});
+
 router.put("/edit/:id", upload.single("tripImage"), (req, res) => {
   console.log(req.file);
+  console.log(req.params.id);
   const id = +req.params.id;
   let data = ({
     name,

@@ -1,12 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import "./CreateTrip.css";
 import TimePicker from "rc-time-picker";
 import axios from "axios";
-/* import DatePicker from "react-datepicker";
- */
 import "rc-time-picker/assets/index.css";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 class CreateTrip extends Component {
   constructor(props) {
@@ -72,12 +69,13 @@ class CreateTrip extends Component {
       .then(res => {
         console.log("Success");
         console.log(res);
-        /*         this.props.history.push("/trips");
+        this.props.history.push("/");
+        /*
         window.location.reload();
          */
 
-        window.location.href = "/trips";
-
+        /*         window.location.href = "/trips";
+         */
         /*         this.props.history.push("/");
          */
       })
@@ -203,4 +201,4 @@ class CreateTrip extends Component {
   }
 }
 
-export default CreateTrip;
+export default withRouter(CreateTrip);

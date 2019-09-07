@@ -2,12 +2,16 @@ import {
   FETCH_TRIPS,
   FETCH_SINGLE_TRIP,
   DELETE_TRIP,
-  EDIT_TRIP
+  EDIT_TRIP,
+  CLEAR_TRIP,
+  ADD_COMMENT,
+  ADD_LIKE
 } from "../constants/actions";
 
 const initialState = {
   trips: [],
-  trip: {}
+  trip: {},
+  comments: []
 };
 
 export default function(state = initialState, action) {
@@ -20,7 +24,8 @@ export default function(state = initialState, action) {
     case FETCH_SINGLE_TRIP:
       return {
         ...state,
-        trip: action.payload
+        trip: action.payload,
+        comments: action.payload.comments
       };
     case DELETE_TRIP:
       return {
@@ -32,7 +37,22 @@ export default function(state = initialState, action) {
         ...state,
         trip: action.payload
       };
-
+    case CLEAR_TRIP:
+      return {
+        ...state,
+        trip: {},
+        comments: []
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        comments: [...state.comments, action.payload]
+      };
+    case ADD_LIKE:
+      return {
+        ...state,
+        trips: action.payload
+      };
     default:
       return state;
   }

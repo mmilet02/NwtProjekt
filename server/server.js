@@ -20,8 +20,6 @@ database
     console.error("Unable to connect to the database:", err);
   });
 
-app.use;
-
 const trips = require("./routes/api/trips");
 const users = require("./routes/api/users");
 app.use("/api/trips", trips);

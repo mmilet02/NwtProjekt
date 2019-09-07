@@ -10,5 +10,10 @@ export const USER_REGISTER_FAIL = "USER_REGISTER_FAIL";
 export const USER_LOADED = "USER_LOADED";
 export const USER_LOADED_FAIL = "USER_LOADED_FAIL";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const FETCH_USER = "FETCH_USER";
 
 export const CLEAR_ERRORS = "CLEAR ERRORS";
+export const CLEAR_TRIP = "CLEAR_TRIP";
+
+export const ADD_COMMENT = "ADD_COMMENT";
+export const ADD_LIKE = "ADD_LIKE";

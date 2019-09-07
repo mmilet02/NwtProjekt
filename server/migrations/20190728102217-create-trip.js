@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      createdBy: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -41,6 +45,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      likes: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
+      },
+      comments: { type: Sequelize.ARRAY(Sequelize.JSON) },
       UserId: {
         type: Sequelize.INTEGER,
         model: "users", // <<< Note, its table's name, not object name
