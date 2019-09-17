@@ -99,9 +99,16 @@ router.post("/", upload.single("tripImage"), getToken, (req, res) => {
 
 router.get("/show/:id", (req, res) => {
   console.log(req.param);
-  let id = req.params.id;
+  const id = req.params.id;
   Trip.findOne({ where: { id: id } }).then(trip => {
     res.send(trip);
+  });
+});
+
+router.get("/userTrips/:id", (req, res) => {
+  const id = req.params.id;
+  Trip.findAll({ where: { UserId: id } }).then(trips => {
+    res.send(trips);
   });
 });
 

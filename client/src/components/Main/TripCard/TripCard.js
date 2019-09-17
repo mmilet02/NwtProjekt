@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./TripCard.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Popup from "reactjs-popup";
 import { addLike } from "../../../actions/tripActions";
+import Modal from "../../../Modal";
 
 export class TripCard extends Component {
   constructor(props) {
@@ -20,10 +20,10 @@ export class TripCard extends Component {
     console.log("LIKED");
     this.props.addLike(this.props.trip.id);
     console.log(this.state);
-    /*  this.setState({
+    this.setState({
       ...this.state,
-      likes: this.state.likes.push({ userName: "something" })
-    }); */
+      likes: [...this.state.likes, { userName: "user.uSERNAMElOl" }]
+    });
   }
 
   handleClose() {
@@ -40,8 +40,12 @@ export class TripCard extends Component {
     });
   }
 
+  toggleModal = () => {
+    this.setState({ ...this.state, show: !this.state.show });
+  };
+
   render() {
-    console.log(this.props);
+    console.log(this.props, this.state.likes);
     let trip = this.props.trip;
     return (
       <div key={trip.id} className="tripp">
@@ -75,23 +79,25 @@ export class TripCard extends Component {
             <i className="fas fa-heart fa-lg" />
             <div>
               Liked by
-              <Popup
-                trigger={<button> {this.props.trip.likes.length}</button>}
-                position="right center"
-                modal
-                closeOnDocumentClick
-              >
-                <div>User that liked it...</div>
-                {trip.likes.map(singleLike => {
-                  return <div>{singleLike.userName}</div>;
-                })}
-              </Popup>
+              <button onClick={this.toggleModal}>
+                {this.props.trip.likes.length}
+              </button>
             </div>
             <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
               LIKE
             </button>
           </div>
         </div>
+        {this.state.show ? (
+          <Modal className="modal">
+            <div>
+              <button onClick={this.toggleModal}>Close</button>
+              {this.state.likes.map(like => (
+                <p>{like.userName}</p>
+              ))}
+            </div>
+          </Modal>
+        ) : null}
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 function Comments(props) {
   console.log(props);
+  console.log("comments length", props.comments.length);
   return (
     <div>
       {!props.loading ? (
@@ -15,7 +16,7 @@ function Comments(props) {
       ) : (
         <h1>Loading...</h1>
       )}
-      {!props.comments.length === 0 ? (
+      {props.comments.length > 0 ? (
         <div>
           comments
           {props.comments.map((comment, index) => {

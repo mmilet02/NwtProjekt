@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import "./HomePage.css";
 /* import GoogleMap from "../../GoogleMap";
  */
+import Modal from "../../../Modal";
+
 export class HomePage extends Component {
   constructor() {
     super();
     this.state = {
-      trips: []
+      trips: [],
+      show: false
     };
   }
   componentDidMount() {
@@ -18,6 +21,11 @@ export class HomePage extends Component {
       trips: trips
     });
   }
+
+  toggleModal = () => {
+    this.setState({ ...this.state, show: !this.state.show });
+  };
+
   render() {
     console.log(this.state);
     let trips = this.state.trips.slice(0, 3).map(trip => {
@@ -33,6 +41,7 @@ export class HomePage extends Component {
               <img src="http://localhost:3000/images/best.png" alt="" />
             </div>
           </Link>
+          <button onClick={this.toggleModal}>Toggle me</button>
         </div>
       );
     });
@@ -47,8 +56,15 @@ export class HomePage extends Component {
           </p>
         </div>
         <div className="bestTrips">{trips}</div>
+        {this.state.show ? (
+          <Modal className="modal">
+            <div>
+              <button onClick={this.toggleModal}>Toggle me</button>
+            </div>
+          </Modal>
+        ) : null}
         {/*         <GoogleMap />
-         */}{" "}
+         */}
       </div>
     );
   }

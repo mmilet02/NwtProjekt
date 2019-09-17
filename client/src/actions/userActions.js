@@ -91,10 +91,21 @@ export const userRegister = body => dispatch => {
     });
 };
 
-export const fetchUser = () => dispatch => {
-  dispatch({
-    type: FETCH_USER
-  });
+export const fetchUser = id => dispatch => {
+  //fetchedUser - fetchat info za usera na kojeg kliknemo - u komponent willl unmount ovo moramo Clear-at
+  axios
+    .get("/api/users/user/" + id)
+    .then(res => {
+      console.log("SUCCESS");
+      console.log("Fetched user loaded palyload", res.data.user);
+      dispatch({
+        type: FETCH_USER,
+        payload: res.data.user
+      });
+    })
+    .catch(err => {
+      console.log("Failure catching user profile", err.response);
+    });
 };
 export const userLogout = () => dispatch => {
   localStorage.removeItem("token");

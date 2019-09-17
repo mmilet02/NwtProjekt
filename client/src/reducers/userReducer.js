@@ -6,12 +6,14 @@ import {
   USER_LOADED,
   USER_LOADED_FAIL,
   USER_LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  FETCH_USER
 } from "../constants/actions";
 
 const initialState = {
   isLoggedIn: false,
   user: null,
+  fetchedUser: {},
   errorMsg: null
 };
 
@@ -23,6 +25,11 @@ export default function(state = initialState, action) {
         ...state,
         isLoggedIn: true,
         user: action.payload
+      };
+    case FETCH_USER:
+      return {
+        ...state,
+        fetchedUser: action.payload
       };
     case USER_LOADED:
       return {

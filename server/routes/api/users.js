@@ -15,12 +15,18 @@ const auth = require("../../middleware/getToken");
 router.get("/user/:id", (req, res) => {
   console.log(req.params.id);
   id = req.params.id;
-  User.findOne({ where: { id: id } }).then(user => {
-    console.log(user);
-    return res.json({
-      user: user
+  User.findOne({ where: { id: id } })
+    .then(user => {
+      console.log(user);
+      return res.json({
+        user: user
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        msg: "User fetching Error"
+      });
     });
-  });
 });
 
 router.get("/", auth, (req, res) => {

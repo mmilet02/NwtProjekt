@@ -1,6 +1,7 @@
 import {
   FETCH_TRIPS,
   FETCH_SINGLE_TRIP,
+  FETCH_USER_TRIPS,
   DELETE_TRIP,
   EDIT_TRIP,
   CLEAR_TRIP,
@@ -36,6 +37,20 @@ export const fetchSingleTrip = id => (dispatch, getState) => {
       });
     })
     .catch(err => console.log("Ups, something went wrong", err));
+};
+
+export const fetchUserTrips = id => dispatch => {
+  axios
+    .get("/api/trips/userTrips/" + id)
+    .then(res => {
+      dispatch({
+        type: FETCH_USER_TRIPS,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      console.log("Ups, something went wrong with fetching user trips", err)
+    );
 };
 
 export const editTrip = (data, id) => dispatch => {
