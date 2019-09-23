@@ -30,14 +30,16 @@ export class Login extends Component {
     if (!this.state.email.includes("@")) {
       this.setState({
         ...this.state,
-        emailError: "Email must include @"
+        emailError: "Email must include @",
+        loading: false
       });
       return false;
     } else if (this.state.password.length < 5) {
       this.setState({
         ...this.state,
         emailError: "",
-        passwordError: "Password needs to be atleast 6 characters long"
+        passwordError: "Password needs to be atleast 6 characters long",
+        loading: false
       });
       return false;
     }
@@ -53,6 +55,7 @@ export class Login extends Component {
     console.log(this.state);
     this.setState({
       ...this.state,
+      loading: true,
       emailError: "",
       passwordError: ""
     });
@@ -61,6 +64,10 @@ export class Login extends Component {
       console.log(this.state);
       console.log("form submited");
       this.props.userLogin(this.state);
+      this.setState({
+        ...this.state,
+        loading: false
+      });
       console.log(this.props.history);
       /*       this.props.history.push("/profile");
        */
@@ -101,7 +108,7 @@ export class Login extends Component {
                 <p>{this.state.passwordError}</p>
               ) : null}
               {this.props.errorMsg ? <p>{this.props.errorMsg}</p> : null}
-
+              {this.state.loading ? <div>Spinner</div> : null}
               <button className="login_button" onClick={this.formSubmit}>
                 LOGIN
               </button>

@@ -17,9 +17,7 @@ export class TripCard extends Component {
   }
 
   liked() {
-    console.log("LIKED");
     this.props.addLike(this.props.trip.id);
-    console.log(this.state);
     this.setState({
       ...this.state,
       likes: [...this.state.likes, { userName: "user.uSERNAMElOl" }]
@@ -45,7 +43,6 @@ export class TripCard extends Component {
   };
 
   render() {
-    console.log(this.props, this.state.likes);
     let trip = this.props.trip;
     return (
       <div key={trip.id} className="tripp">
