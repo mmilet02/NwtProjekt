@@ -55,7 +55,7 @@ export class TripDetails extends Component {
   }
 
   render() {
-    console.log(this.props.trip);
+    console.log(this.props);
     return (
       <div className="tripDetailsContainer">
         <div className="detailsImg">
