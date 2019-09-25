@@ -43,6 +43,16 @@ export class Login extends Component {
       });
       return false;
     }
+    this.setState(
+      {
+        ...this.state,
+        emailError: "",
+        passwordError: ""
+      },
+      () => {
+        return true;
+      }
+    );
     return true;
   }
   componentDidMount() {
@@ -55,11 +65,20 @@ export class Login extends Component {
     console.log(this.state);
     this.setState({
       ...this.state,
-      loading: true,
+      loading: false,
       emailError: "",
       passwordError: ""
     });
     const isValid = this.validate();
+    if (!isValid) {
+      return;
+    }
+    this.setState({
+      ...this.state,
+      loading: false,
+      emailError: "",
+      passwordError: ""
+    });
     if (isValid) {
       console.log(this.state);
       console.log("form submited");

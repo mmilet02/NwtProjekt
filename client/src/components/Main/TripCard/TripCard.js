@@ -93,29 +93,33 @@ export class TripCard extends Component {
         <div className="info">
           <div className="info1">
             <p className="location">{trip.location}</p>
-            <p>Start : {trip.date}</p>
-            <p>Price : {trip.price} €</p>
-            <p>Tickets left : {trip.freeSpace}</p>
-            <p>Duration : {trip.duration} days</p>
             <p>
               Created by:
               <Link to={"/profile/user/" + trip.UserId}> {trip.createdBy}</Link>
             </p>
+          </div>
+          <div className="infoFav">
+            <p>Start : {trip.date}</p>
+            <p>Duration : {trip.duration} days</p>
+          </div>
+        </div>
+        <div className="noviLajk">
+          <div>
             <Link to={"/trip/" + trip.id}>
               <div className="buttonDetails">
                 <p>More details</p>
               </div>
             </Link>
           </div>
-          <div className="infoFav">
-            <i className="fas fa-heart fa-lg" />
+          <div className="thumbs">
             <div>
               Liked by
               <button onClick={this.toggleModal}>
                 {this.props.trip.likes.length}
               </button>
             </div>
-            {this.state.liked ? (
+            <i className="fas fa-thumbs-up fa-lg" />
+            {/* {this.state.liked ? (
               <button disabled={!this.props.isLoggedIn} onClick={this.unliked}>
                 UNLIKE
               </button>
@@ -123,7 +127,7 @@ export class TripCard extends Component {
               <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
                 LIKE
               </button>
-            )}
+            )} */}
           </div>
         </div>
         {this.state.show ? (

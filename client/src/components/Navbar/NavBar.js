@@ -64,7 +64,7 @@ class Navbar extends Component {
             </div>
             <div className="h1">
               <div>
-                {true ? (
+                {isLoggedIn ? (
                   <div className="ifLogin">
                     {/* <div>
                   <Link to="/favorite">

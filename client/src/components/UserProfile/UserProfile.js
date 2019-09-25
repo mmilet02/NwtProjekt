@@ -22,9 +22,9 @@ class UserProfile extends Component {
 
   render() {
     console.log("props inc", this.props);
-    /*  if (!this.props.isLoggedIn) {
+    if (!this.props.isLoggedIn) {
       return <Redirect to="/login" />;
-    } */
+    }
     if (
       this.props.isLoggedIn &&
       this.props.user.id === +this.props.match.params.id
@@ -32,7 +32,9 @@ class UserProfile extends Component {
       return <Redirect to="/profile" />;
     }
     let userTrips = this.props.userTrips.map(trip => {
-      return <TripCard key={trip.id} trip={trip}></TripCard>;
+      return (
+        <TripCard key={trip.id} trip={trip} user={this.props.user}></TripCard>
+      );
     });
     return (
       <div class="userProfile">

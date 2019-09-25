@@ -24,7 +24,7 @@
 .tripp {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 100%;
   background-color: white;
   margin-bottom: 20px;
   margin-left: 20px;
@@ -48,6 +48,9 @@
 }
 .tripImage {
   widows: 100%;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 .tripsContainer {
@@ -70,7 +73,11 @@
   display: flex;
   justify-content: space-between;
 }
-
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 .info1 {
   padding-left: 10px;
 }
@@ -86,17 +93,26 @@
 .infoFav {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: flex-end;
   padding-bottom: 10px;
   padding-right: 10px;
-  color: red;
+}
+
+.infoFav p {
+  margin: 0px;
+}
+.noviLajk {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .buttonDetails {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  height: 40px;
+  height: 20px;
   color: white;
   background-color: rgb(175, 174, 174);
   margin-top: 20px;
