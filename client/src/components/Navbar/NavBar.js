@@ -22,7 +22,7 @@ class Navbar extends Component {
     console.log("USERR", user);
     return (
       <header className="second_header">
-        <div className="firstHeaderPart">
+        {/* <div className="firstHeaderPart">
           <div>
             {isLoggedIn ? (
               <div className="ifLogin">
@@ -36,8 +36,8 @@ class Navbar extends Component {
                     <i className="fas fa-plus fa-lg" />
                   </Link>
                 </div>
-                {/*                 <Link to="/profile">Profile - {user.fullname}</Link>
-                 */}{" "}
+                                 <Link to="/profile">Profile - {user.fullname}</Link>
+                 {" "}
                 <Link to="/profile">Profile - USER FULL NAME</Link>
                 <div onClick={this.logout}>Logout</div>
               </div>
@@ -52,7 +52,7 @@ class Navbar extends Component {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         <div className="secondHeaderPart">
           <div className="logo">
@@ -61,14 +61,39 @@ class Navbar extends Component {
             </Link>
           </div>
           <div className="tripss">
-            <div className="h">
-              <Link to="/trips">EXTREME</Link>
+            <div className="h1">
+              <Link to="/trips">TRIPS</Link>
             </div>
-            <div className="h">
-              <Link to="/trips">EXPLORE</Link>
-            </div>
-            <div className="h">
-              <Link to="/trips">RELAX</Link>
+            <div className="h1">
+            <div>
+            {true ? (
+              <div className="ifLogin">
+                {/* <div>
+                  <Link to="/favorite">
+                    <i className="fas fa-heart fa-lg" />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/createTrip">
+                    <i className="fas fa-plus fa-lg" />
+                  </Link>
+                </div> */}
+                                 {/* <Link to="/profile">Profile - {user.fullname}</Link> */}
+                 {" "}
+                <Link to="/profile">USER FULL NAME</Link>
+                <div onClick={this.logout}>Logout</div>
+              </div>
+            ) : (
+              <div className="ifLogin">
+                <div className="h2">
+                  <Link to="/login">LOGIN</Link>
+                </div>
+                <div className="h2">
+                  <Link to="/register">REGISTER</Link>
+                </div>
+              </div>
+            )}
+          </div>
             </div>
           </div>
         </div>

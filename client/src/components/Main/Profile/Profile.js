@@ -130,37 +130,29 @@ export class Profile extends Component {
         <div className="profilInfo">
           <div className="profilImg">
             <div className="profilImg1">
-              <img src="http://localhost:3000/images/profil.png" alt="" />
+              <img src="http://localhost:3000/images/mmm.jpg" alt="" />
             </div>
           </div>
           <div className="profilInfo1">
             <p>
-              <b>Ime</b> : Mario Mileta
+              <b>Name</b> : Mario Mileta
             </p>
             <p>
-              <b>Spol</b>: M
-            </p>
-            <p>
-              <b>Dob</b>: 30 godina
-            </p>
-            <p>
-              <b>Zanimanje</b>: klaun
-            </p>
-            <p>
-              <b>Firma</b> : LadiJaja d.o.o.
+              <b>Contact</b>: mmilet007@fesb.hr
             </p>
           </div>
         </div>
-        {/* <div className="myTrips">
+        <div className="myTrips">
           <div className="myTripsHeading">
             <p>
               ────────────────────────── MY TRIPS ──────────────────────────
             </p>
           </div>
+          <div className="tripList">{trips}</div>
           
-        </div> */}
+        </div> 
 
-        <div className="dropdown_container">
+        {/* <div className="dropdown_container">
           <div className="myTripsHeading">
             <div onClick={this.toggleDropdown1}>
               MY TRIPS
@@ -176,7 +168,7 @@ export class Profile extends Component {
             </div>
           </div>
           <div className="optionDiv"> {option}</div>
-        </div>
+        </div> */}
       </div>
     );
   }
