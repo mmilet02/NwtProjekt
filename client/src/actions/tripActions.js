@@ -6,7 +6,8 @@ import {
   EDIT_TRIP,
   CLEAR_TRIP,
   ADD_COMMENT,
-  ADD_LIKE
+  ADD_LIKE,
+  REMOVE_LIKE
 } from "../constants/actions";
 import axios from "axios";
 
@@ -124,6 +125,34 @@ export const addLike = id => (dispatch, getState) => {
   };
   axios
     .post("/api/trips/like/" + id, null, config)
+    .then(res => {
+      console.log("LIKING RES", res.data.trip);
+      console.log(getState().tripReducer.trips);
+      let newTrips = getState().tripReducer.trips.map(trip => {
+        if (trip.id == res.data.trip.id) {
+          trip = res.data.trip;
+        }
+        return trip;
+      });
+      console.log(newTrips);
+      dispatch({
+        type: ADD_LIKE,
+        payload: newTrips
+      });
+    })
+    .catch(err => {
+      console.log("Error in LIKING", err);
+    });
+};
+
+export const removeLike = id => (dispatch, getState) => {
+  let config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  };
+  axios
+    .post("/api/trips/unlike/" + id, null, config)
     .then(res => {
       console.log("LIKING RES", res.data.trip);
       console.log(getState().tripReducer.trips);

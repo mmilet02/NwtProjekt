@@ -15,7 +15,7 @@ export class TripList extends Component {
       user: ""
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchTrips();
     window.scrollTo(0, 0);
   }
@@ -23,7 +23,9 @@ export class TripList extends Component {
   render() {
     console.log(this.props.trips);
     let trips = this.props.trips.map(trip => {
-      return <TripCard key={trip.id} trip={trip}></TripCard>;
+      return (
+        <TripCard key={trip.id} trip={trip} user={this.props.user}></TripCard>
+      );
     });
     return (
       <div>
@@ -53,7 +55,8 @@ export class TripList extends Component {
 }
 
 const mapStateToProps = state => ({
-  trips: state.tripReducer.trips
+  trips: state.tripReducer.trips,
+  user: state.userReducer.user
 });
 
 export default connect(

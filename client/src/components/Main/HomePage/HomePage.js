@@ -1,48 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
-/* import GoogleMap from "../../GoogleMap";
- */
-import Modal from "../../../Modal";
+import TripCard from "../TripCard/TripCard";
+import { connect } from "react-redux";
+import { fetchTrips } from "../../../actions/tripActions";
 
 export class HomePage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      trips: [],
-      show: false
-    };
-  }
   componentDidMount() {
-    let trips = require("../../../trips.json");
-    console.log(trips);
-    this.setState({
-      ...this.state,
-      trips: trips
-    });
+    this.props.fetchTrips();
   }
-
-  toggleModal = () => {
-    this.setState({ ...this.state, show: !this.state.show });
-  };
-
   render() {
-    console.log(this.state);
-    let trips = this.state.trips.slice(0, 3).map(trip => {
+    let sortedTrips = this.props.trips.sort((a, b) => {
+      return b.likes.length - a.likes.length;
+    });
+    let trips = sortedTrips.map(trip => {
+      console.log(this.props.user);
       return (
-        <div className="tripCard" id={"trip" + trip.trip_id} key={trip.trip_id}>
-          <Link to={"/post/" + trip.trip_id}>
-            <img
-              className="tripImg"
-              src={"http://localhost:3000/images/" + trip.image}
-              alt=""
-            />
-            <div className="trophy">
-              <img src="http://localhost:3000/images/best.png" alt="" />
-            </div>
-          </Link>
-          <button onClick={this.toggleModal}>Toggle me</button>
-        </div>
+        <TripCard key={trip.id} trip={trip} user={this.props.user}></TripCard>
       );
     });
     return (
@@ -56,18 +30,19 @@ export class HomePage extends Component {
           </p>
         </div>
         <div className="bestTrips">{trips}</div>
-        {this.state.show ? (
-          <Modal className="modal">
-            <div>
-              <button onClick={this.toggleModal}>Toggle me</button>
-            </div>
-          </Modal>
-        ) : null}
-        {/*         <GoogleMap />
-         */}
       </div>
     );
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => ({
+  trips: state.tripReducer.trips,
+  user: state.userReducer.user
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchTrips
+  }
+)(HomePage);

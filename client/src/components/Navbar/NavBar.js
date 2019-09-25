@@ -36,9 +36,7 @@ class Navbar extends Component {
                     <i className="fas fa-plus fa-lg" />
                   </Link>
                 </div>
-                {/*                 <Link to="/profile">Profile - {user.fullname}</Link>
-                 */}{" "}
-                <Link to="/profile">Profile - USER FULL NAME</Link>
+                <Link to="/profile">Profile - {user.fullname}</Link>
                 <div onClick={this.logout}>Logout</div>
               </div>
             ) : (

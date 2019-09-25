@@ -130,6 +130,25 @@ router.post("/like/:id", getToken, (req, res) => {
   });
 });
 
+router.post("/unlike/:id", getToken, (req, res) => {
+  console.log(req.user);
+  const id = req.params.id;
+  Trip.findOne({ where: { id: id } }).then(trip => {
+    console.log(trip.dataValues);
+    const tripUpdate = trip;
+    tripUpdate.dataValues.likes = trip.dataValues.likes.filter(likedBy => {
+      return likedBy.userName !== req.user.fullname;
+    });
+    console.log(tripUpdate.dataValues);
+
+    Trip.update(tripUpdate.dataValues, { where: { id: id } })
+      .then(updatedTrip => {
+        res.json({ trip });
+      })
+      .catch(err => console.log("ERROR", err));
+  });
+});
+
 router.post("/comment/:id", getToken, (req, res) => {
   const id = req.params.id;
   console.log(req.body);

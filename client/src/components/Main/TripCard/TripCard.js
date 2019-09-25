@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./TripCard.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addLike } from "../../../actions/tripActions";
+import { addLike, removeLike } from "../../../actions/tripActions";
 import Modal from "../../../Modal";
 
 export class TripCard extends Component {
@@ -10,9 +10,17 @@ export class TripCard extends Component {
     super(props);
     this.state = {
       show: false,
-      likes: []
+      likes: [],
+      liked:
+        this.props.user !== null
+          ? this.props.trip.likes.find(name => {
+              console.log(name.userName, this.props.user.fullname);
+              return name.userName === this.props.user.fullname;
+            })
+          : false
     };
     this.liked = this.liked.bind(this);
+    this.unliked = this.unliked.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
@@ -20,7 +28,18 @@ export class TripCard extends Component {
     this.props.addLike(this.props.trip.id);
     this.setState({
       ...this.state,
-      likes: [...this.state.likes, { userName: "user.uSERNAMElOl" }]
+      likes: [...this.state.likes, { userName: this.props.user.fullname }],
+      liked: !this.state.liked
+    });
+  }
+  unliked() {
+    this.props.removeLike(this.props.trip.id);
+    this.setState({
+      ...this.state,
+      likes: this.state.likes.filter(likedBy => {
+        return likedBy.userName != this.props.user.fullname;
+      }),
+      liked: !this.state.liked
     });
   }
 
@@ -30,12 +49,28 @@ export class TripCard extends Component {
       show: !this.state.show
     });
   }
-
   componentDidMount() {
+    console.log(this.props);
+
     this.setState({
       ...this.state,
       likes: this.props.trip.likes
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.user !== prevProps.user) {
+      this.setState({
+        ...this.state,
+        liked:
+          this.props.user !== null
+            ? this.props.trip.likes.find(name => {
+                console.log(name.userName, this.props.user.fullname);
+                return name.userName === this.props.user.fullname;
+              })
+            : false
+      });
+    }
   }
 
   toggleModal = () => {
@@ -80,9 +115,15 @@ export class TripCard extends Component {
                 {this.props.trip.likes.length}
               </button>
             </div>
-            <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
-              LIKE
-            </button>
+            {this.state.liked ? (
+              <button disabled={!this.props.isLoggedIn} onClick={this.unliked}>
+                UNLIKE
+              </button>
+            ) : (
+              <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
+                LIKE
+              </button>
+            )}
           </div>
         </div>
         {this.state.show ? (
@@ -106,5 +147,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addLike }
+  { addLike, removeLike }
 )(TripCard);

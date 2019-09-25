@@ -6,7 +6,8 @@ import {
   EDIT_TRIP,
   CLEAR_TRIP,
   ADD_COMMENT,
-  ADD_LIKE
+  ADD_LIKE,
+  REMOVE_LIKE
 } from "../constants/actions";
 
 const initialState = {
@@ -56,6 +57,11 @@ export default function(state = initialState, action) {
         comments: [...state.comments, action.payload]
       };
     case ADD_LIKE:
+      return {
+        ...state,
+        trips: action.payload
+      };
+    case REMOVE_LIKE:
       return {
         ...state,
         trips: action.payload
