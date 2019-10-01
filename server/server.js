@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
+
 const database = new Sequelize("nwt_database", "postgres", "postgres", {
   /*   host: "127.0.0.1",
    */ dialect: "postgres"
@@ -23,6 +24,7 @@ database
 
 const trips = require("./routes/api/trips");
 const users = require("./routes/api/users");
+
 app.use("/api/trips", trips);
 app.use("/api/users", users);
 

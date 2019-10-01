@@ -78,10 +78,7 @@ class EditTrip extends Component {
     return (
       <div className="formContainer">
         <div className="headingCreate">
-          <p>
-            ───────────────────────── CREATE YOUR OWN TRIP
-            ─────────────────────────
-          </p>
+          <p>EDIT TRIP</p>
         </div>
 
         <form
@@ -100,8 +97,8 @@ class EditTrip extends Component {
             />
           </label>
           <label>
-            <input
-              className="user_input"
+            <textarea
+              className="text_area"
               type="text"
               placeholder="Description"
               name="description"
@@ -112,12 +109,14 @@ class EditTrip extends Component {
           <div>
             <TimePicker
               placeholder="Starting time"
+              className="time"
               showSecond={false}
               onChange={time => this.handleDateChange("start_hour", time)}
               defaultValue={moment(this.state.start_hour)}
             />
             <TimePicker
               placeholder="Ending time"
+              className="time"
               showSecond={false}
               onChange={time => this.handleDateChange("end_hour", time)}
               defaultValue={moment(this.state.end_hour)}
@@ -164,7 +163,7 @@ class EditTrip extends Component {
                */ onChange={this.fileChanged}
             />
           </label>
-          <button className="createButton" onSubmit={this.submitForm}>
+          <button className="bookNow" onSubmit={this.submitForm}>
             Edit
           </button>
         </form>

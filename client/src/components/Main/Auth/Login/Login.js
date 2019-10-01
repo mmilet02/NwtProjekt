@@ -61,35 +61,17 @@ export class Login extends Component {
 
   formSubmit(e) {
     e.preventDefault();
-    console.log("submitting");
-    console.log(this.state);
-    this.setState({
-      ...this.state,
-      loading: false,
-      emailError: "",
-      passwordError: ""
-    });
+
+    this.props.clearningErrors();
     const isValid = this.validate();
-    if (!isValid) {
-      return;
-    }
-    this.setState({
-      ...this.state,
-      loading: false,
-      emailError: "",
-      passwordError: ""
-    });
+
     if (isValid) {
-      console.log(this.state);
-      console.log("form submited");
       this.props.userLogin(this.state);
       this.setState({
         ...this.state,
-        loading: false
+        loading: false,
+        passwordError: ""
       });
-      console.log(this.props.history);
-      /*       this.props.history.push("/profile");
-       */
     }
   }
   render() {
@@ -112,7 +94,7 @@ export class Login extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-              {this.state.emailError ? <p>{this.state.emailError}</p> : null}
+
               <label>
                 <input
                   className="userInput"
@@ -124,10 +106,14 @@ export class Login extends Component {
                 />
               </label>
               {this.state.passwordError ? (
-                <p>{this.state.passwordError}</p>
+                <p style={{ color: "red" }}>{this.state.passwordError}</p>
               ) : null}
-              {this.props.errorMsg ? <p>{this.props.errorMsg}</p> : null}
-              {this.state.loading ? <div>Spinner</div> : null}
+              {this.state.emailError ? (
+                <p style={{ color: "red" }}>{this.state.emailError}</p>
+              ) : null}
+              {this.props.errorMsg ? (
+                <p style={{ color: "red" }}>{this.props.errorMsg}</p>
+              ) : null}
               <button className="login_button" onClick={this.formSubmit}>
                 LOGIN
               </button>

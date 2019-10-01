@@ -1,34 +1,41 @@
 import React, { Component } from "react";
+import "./Comments.css";
 
 function Comments(props) {
   console.log(props);
   console.log("comments length", props.comments.length);
   return (
-    <div>
-      {!props.loading ? (
-        <form onSubmit={props.onSubmit}>
-          <textarea
-            onChange={props.handleChange}
-            value={props.comment}
-          ></textarea>
-          <button>Submit comment</button>
-        </form>
-      ) : (
-        <h1>Loading...</h1>
-      )}
+    <div className="comment_section">
       {props.comments.length > 0 ? (
         <div>
-          comments
           {props.comments.map((comment, index) => {
             return (
-              <p key={index}>
-                {comment.comment} by {comment.userName}
-              </p>
+              <div key={index}>
+                <h4>{comment.userName}</h4>
+                <p>{comment.comment}</p>
+                <br />
+              </div>
             );
           })}
         </div>
       ) : (
-        <p>No comments yet</p>
+        <p>No comments yet, start by posting one!</p>
+      )}
+
+      {!props.loading ? (
+        <form onSubmit={props.onSubmit}>
+          <div className="komentar">
+            <textarea
+              className="text_area2"
+              onChange={props.handleChange}
+              value={props.comment}
+              placeholder="Write a comment..."
+            ></textarea>
+            <button className="bookNow">Submit comment</button>
+          </div>
+        </form>
+      ) : (
+        <h1>Loading...</h1>
       )}
     </div>
   );

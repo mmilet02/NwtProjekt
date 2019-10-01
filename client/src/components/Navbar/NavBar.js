@@ -66,19 +66,12 @@ class Navbar extends Component {
               <div>
                 {isLoggedIn ? (
                   <div className="ifLogin">
-                    {/* <div>
-                  <Link to="/favorite">
-                    <i className="fas fa-heart fa-lg" />
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/createTrip">
-                    <i className="fas fa-plus fa-lg" />
-                  </Link>
-                </div> */}
-                    {/* <Link to="/profile">Profile - {user.fullname}</Link> */}{" "}
-                    <Link to="/profile">USER FULL NAME</Link>
-                    <div onClick={this.logout}>Logout</div>
+                    <div className="h2">
+                      <Link to="/profile">{user.fullname}</Link>
+                    </div>
+                    <div className="logout" onClick={this.logout}>
+                      Logout
+                    </div>
                   </div>
                 ) : (
                   <div className="ifLogin">

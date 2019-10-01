@@ -8,7 +8,7 @@ import {
   clearTrip,
   addComment
 } from "../../../actions/tripActions";
-import Comment from "./Comments/Comments.js";
+import Comments from "./Comments/Comments.js";
 
 export class TripDetails extends Component {
   constructor(props) {
@@ -55,45 +55,75 @@ export class TripDetails extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.props.trip);
+    let duration = 0;
+    let start_hour = 0;
+    let end_hour = 0;
+    if (this.props.trip.start_hour) {
+      start_hour = this.props.trip.start_hour.slice(16, 21);
+      end_hour = this.props.trip.end_hour.slice(16, 21);
+      const start = start_hour.slice(0, 2);
+      const end = end_hour.slice(0, 2);
+      duration = end - start;
+    }
     return (
       <div className="tripDetailsContainer">
         <div className="detailsImg">
           <img src={"http://localhost:5000/" + this.props.trip.image} alt="" />
         </div>
         <div className="infoGlavni">
-          <div className="faDiv">
-            <i className="fas fa-map-marker-alt fa-2x" />
-            <p>{this.props.trip.location}</p>
+          <div className="firstRow">
+            <div className="faDiv">
+              <i className="fas fa-map-marker-alt fa-2x" />
+              <p>{this.props.trip.location}</p>
+            </div>
+            <div className="faDiv">
+              <i className="fas fa-hourglass-start fa-2x" />
+              <p>{duration} hours</p>
+            </div>
           </div>
-          <div className="faDiv">
-            <i className="fas fa-tag fa-2x" />
-            <p>{this.props.trip.price} €</p>
+          <div className="secondRow">
+            <div className="faDiv">
+              <i className="fas fa-tag fa-2x" />
+              <p>{this.props.trip.price} kn</p>
+            </div>
+
+            <div className="faDiv">
+              <i className="fas fa-ticket-alt fa-2x" />
+              <p>{this.props.trip.freespace} places left</p>
+            </div>
           </div>
-          <div className="faDiv">
-            <i className="far fa-calendar-alt fa-2x" />
-            <p>{this.props.trip.date}</p>
-          </div>
-          <div className="faDiv">
-            <i className="fas fa-hourglass-start fa-2x" />
-            <p>{this.props.trip.duration} days</p>
-          </div>
-          <div className="faDiv">
-            <i className="fas fa-ticket-alt fa-2x" />
-            <p>{this.props.trip.freeSpace}</p>
-          </div>
-          <div className="faDiv">
-            <i className="fas fa-user-tie fa-2x" />
-            <p>{this.props.trip.company}</p>
+          <div className="thirdRow">
+            <div className="faDiv">
+              <i className="far fa-calendar-alt fa-2x" />
+              <div>
+                <p> Start: {start_hour}h</p>
+                <p> End: {end_hour}h</p>
+              </div>
+            </div>
+            <div className="faDiv">
+              <i className="fas fa-user-tie fa-2x" />
+              <p>
+                Posted by:
+                <Link to={"/profile/user/" + this.props.trip.UserId}>
+                  {this.props.trip.createdBy}
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
+        <br />
+        <br />
         <div className="tripDescription">
           <p>{this.props.trip.description}</p>
         </div>
+        <br />
+        <br />
+
         {this.props.isLoggedIn ? (
           <div>
             {this.props.trip.UserId === this.props.user.id ? (
-              <div>
+              <div className="botuni">
                 <button className="bookNow" onClick={this.deleteTrip}>
                   Delete
                 </button>
@@ -103,20 +133,18 @@ export class TripDetails extends Component {
               </div>
             ) : (
               <p>
-                WHAT {this.props.trip.UserId} and {this.props.user.id}
+                <button className="bookNow">BOOK NOW</button>
               </p>
             )}
           </div>
-        ) : (
-          <p>Not logged in</p>
-        )}
-        <Comment
+        ) : null}
+        <hr />
+        <Comments
           comments={this.props.comments}
           onSubmit={this.onSubmit}
           handleChange={this.handleChange}
           comment={this.state.comment}
         />
-        <button className="bookNow">BOOK NOW</button>
       </div>
     );
   }

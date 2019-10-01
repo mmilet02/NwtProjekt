@@ -1,177 +1,92 @@
 import React, { Component } from "react";
 import "./Profile.css";
 import { Link } from "react-router-dom";
-import CreateTrip from "../CreateTrip/CreateTrip";
+
+import { connect } from "react-redux";
+import { fetchUser } from "../../../actions/userActions";
+import { fetchTrips } from "../../../actions/tripActions";
+import TripCard from "../TripCard/TripCard.js";
 
 export class Profile extends Component {
-  constructor() {
-    super();
-    this.state = {
-      trips: [],
-      isVisible1: false,
-      isVisible2: false,
-      isVisible3: false
-    };
+  constructor(props) {
+    super(props);
   }
   componentDidMount() {
-    let trips = require("../../../trips.json");
-    console.log(trips);
-    this.setState({
-      ...this.state,
-      trips: trips
-    });
+    this.props.fetchTrips();
   }
 
-  toggleDropdown1 = () =>
-    this.setState({
-      ...this.state,
-      isVisible1: !this.state.isVisible1,
-      isVisible2: false,
-      isVisible3: false
-    });
-
-  toggleDropdown2 = () =>
-    this.setState({
-      ...this.state,
-      isVisible2: !this.state.isVisible2,
-      isVisible1: false,
-      isVisible3: false
-    });
-
-  toggleDropdown3 = () =>
-    this.setState({
-      ...this.state,
-      isVisible3: !this.state.isVisible3,
-      isVisible2: false,
-      isVisible1: false
-    });
-
   render() {
-    let trips = this.state.trips.map(trip => {
-      return (
-        <div key={trip.trip_id} className="tripp">
-          <div className="tripImage">
-            <Link to={"/post/" + trip.trip_id}>
-              <img
-                className="trippImage"
-                src={"http://localhost:3000/images/" + trip.image}
-                alt=""
-              />
-            </Link>
-          </div>
-          <div className="info">
-            <div className="info1">
-              <p className="location">{trip.location}</p>
-              <p>Start : {trip.date}</p>
-              <p>Price : {trip.price} €</p>
-              <p>Tickets left : {trip.freeSpace}</p>
-              <p>Duration : {trip.duration} days</p>
-              <Link to={"/post/" + trip.trip_id}>
-                <div className="buttonDetails">
-                  <p>More details</p>
-                </div>
-              </Link>
-            </div>
-            <div className="infoFav">
-              <i class="fas fa-heart fa-lg" />
-            </div>
-          </div>
-        </div>
-      );
-    });
-    let trips2 = this.state.trips.map(trip => {
-      return (
-        <div key={trip.trip_id} className="tripp">
-          <div className="tripImage">
-            <Link to={"/post/" + trip.trip_id}>
-              <img
-                className="trippImage"
-                src={"http://localhost:3000/images/" + trip.image}
-                alt=""
-              />
-            </Link>
-          </div>
-          <div className="info">
-            <div className="info1">
-              <p className="location">{trip.location}</p>
-              <p>Start : {trip.date}</p>
-              <p>Price : {trip.price} €</p>
-              <p>Tickets left : {trip.freeSpace}</p>
-              <p>Duration : {trip.duration} days</p>
-              <Link to={"/post/" + trip.trip_id}>
-                <div className="buttonDetails">
-                  <p>More details</p>
-                </div>
-              </Link>
-            </div>
-            <div className="infoFav">
-              <i class="fas fa-heart fa-lg" />
-            </div>
-          </div>
-        </div>
-      );
-    });
-    trips.push(
-      <div onClick={this.toggleDropdown3} className="tripp" id="addCard">
-        <i class="fas fa-plus fa-2x" />
-      </div>
-    );
+    console.log(this.props);
+    let trips = [];
 
-    let option;
-    if (this.state.isVisible1) {
-      option = <div className="myTripsTrips">{trips}</div>;
-    } else if (this.state.isVisible2) {
-      option = <div className="myTripsTrips">{trips2}</div>;
-    } else if (this.state.isVisible3) {
-      option = <CreateTrip />;
+    let fullname = "";
+    let email = "";
+    if (this.props.isLoggedIn) {
+      trips = this.props.trips
+        .filter(trip => {
+          return trip.UserId === this.props.user.id;
+        })
+        .map(trip => {
+          return (
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              user={this.props.user}
+            ></TripCard>
+          );
+        });
+
+      trips.push(
+        <div className="tripp" id="addCard">
+          <Link className="addCard" to="/createTrip">
+            <h4>Create another trip!</h4>
+            <i class="fas fa-plus fa-2x" />
+          </Link>
+        </div>
+      );
+      if (!!this.props.user) {
+        fullname = this.props.user.fullname;
+        email = this.props.user.email;
+      }
     }
     return (
       <div className="profilContainer">
         <div className="profilInfo">
           <div className="profilImg">
             <div className="profilImg1">
-              <img src="http://localhost:3000/images/mmm.jpg" alt="" />
+              <img
+                src="http://localhost:3000/images/placeimg_640_480_any.jpg"
+                alt=""
+              />
             </div>
           </div>
           <div className="profilInfo1">
             <p>
-              <b>Name</b> : Mario Mileta
+              <b>Name</b>: {fullname}
             </p>
             <p>
-              <b>Contact</b>: mmilet007@fesb.hr
+              <b>Contact</b>: {email}
             </p>
           </div>
         </div>
         <div className="myTrips">
           <div className="myTripsHeading">
-            <p>
-              ────────────────────────── MY TRIPS ──────────────────────────
-            </p>
+            <p>MY TRIPS</p>
           </div>
           <div className="tripList">{trips}</div>
-          
-        </div> 
-
-        {/* <div className="dropdown_container">
-          <div className="myTripsHeading">
-            <div onClick={this.toggleDropdown1}>
-              MY TRIPS
-              <i class="fas fa-chevron-down" />
-            </div>
-            <div onClick={this.toggleDropdown2}>
-              MY FAVORITE
-              <i class="fas fa-chevron-down" />
-            </div>
-            <div onClick={this.toggleDropdown3}>
-              CREATE YOUR TRIP
-              <i class="fas fa-chevron-down" />
-            </div>
-          </div>
-          <div className="optionDiv"> {option}</div>
-        </div> */}
+        </div>
       </div>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+  trips: state.tripReducer.trips,
+  isLoggedIn: state.userReducer.isLoggedIn,
+  user: state.userReducer.user
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchUser, fetchTrips }
+)(Profile);

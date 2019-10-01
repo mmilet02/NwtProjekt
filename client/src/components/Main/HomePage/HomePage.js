@@ -13,6 +13,7 @@ export class HomePage extends Component {
     let sortedTrips = this.props.trips.sort((a, b) => {
       return b.likes.length - a.likes.length;
     });
+    sortedTrips = sortedTrips.slice(0, 5);
     let trips = sortedTrips.map(trip => {
       console.log(this.props.user);
       return (
@@ -22,14 +23,14 @@ export class HomePage extends Component {
     return (
       <div className="homepage_container">
         <div className="header_container">
-          <img src="http://localhost:3000/images/home_background.jpg" alt="" />
+          <img src="http://localhost:3000/images/1.jpeg" alt="" />
         </div>
         <div className="heading">
-          <p>
-            ────────────────────────── MOST POPULAR ──────────────────────────
-          </p>
+          <p>TOP 5 TRIPS</p>
         </div>
-        <div className="bestTrips">{trips}</div>
+        <div className="tripsContainer">
+          <div className="bestTrips">{trips}</div>
+        </div>
       </div>
     );
   }

@@ -21,8 +21,6 @@ export const userLoaded = () => dispatch => {
   axios
     .get("/api/users/", config)
     .then(res => {
-      console.log("SUCCESS");
-      console.log("User loaded palyload", res.data);
       dispatch({
         type: USER_LOADED,
         payload: res.data.user
@@ -31,7 +29,6 @@ export const userLoaded = () => dispatch => {
     .catch(err => {
       console.log("Failure", err);
       if (err.response) {
-        console.log("Error", err.response.data.msg);
         localStorage.removeItem("token");
       }
       dispatch({
@@ -48,7 +45,6 @@ export const userLogin = body => dispatch => {
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
-      console.log("user_login action", res.data);
       dispatch({
         type: USER_LOGIN,
         payload: res.data.user
@@ -70,7 +66,6 @@ export const userRegister = body => dispatch => {
   axios
     .post("/api/users/register", body)
     .then(res => {
-      console.log(res.data);
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -82,7 +77,6 @@ export const userRegister = body => dispatch => {
     .catch(err => {
       console.log("Auth failed", err);
       if (err.response) {
-        console.log(err.response.data);
         dispatch({
           type: USER_REGISTER_FAIL,
           payload: err.response.data.msg
@@ -96,8 +90,6 @@ export const fetchUser = id => dispatch => {
   axios
     .get("/api/users/user/" + id)
     .then(res => {
-      console.log("SUCCESS");
-      console.log("Fetched user loaded palyload", res.data.user);
       dispatch({
         type: FETCH_USER,
         payload: res.data.user

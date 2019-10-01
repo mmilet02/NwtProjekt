@@ -21,13 +21,22 @@
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
+.noviLajk {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .tripp {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 30%;
   background-color: white;
   margin-bottom: 20px;
-  margin-left: 20px;
+  margin-left: 10px;
+  position: relative;
+  border: solid 1px rgb(182, 182, 182);
 }
 
 .tripp:hover {
@@ -52,16 +61,23 @@
   padding-top: 10px;
   padding-left: 10px;
 }
-
+.price {
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 2px 2px black;
+}
 .tripsContainer {
-  width: 90%;
+  width: 95%;
   height: auto;
   margin: 20px auto 20px auto;
   display: flex;
   flex-direction: column;
-  background-color: rgb(214, 211, 211);
-  padding-left: 30px;
-  padding-right: 30px;
+  background-color: white;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 30px;
 }
 .tripp a {
@@ -87,39 +103,73 @@
 }
 .location {
   font-weight: 700;
-  padding-bottom: 10px;
 }
 
 .infoFav {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   padding-right: 10px;
+  padding-left: 15px;
 }
 
 .infoFav p {
   margin: 0px;
 }
-.noviLajk {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+
 .buttonDetails {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
-  height: 20px;
+  height: 30px;
+  width: 100%;
   color: white;
-  background-color: rgb(175, 174, 174);
-  margin-top: 20px;
+  background-color: rgb(109, 108, 108);
+  margin-top: 10px;
 }
 
 .buttonDetails:hover {
   background-color: rgb(202, 200, 200);
+  color: #333;
+}
+
+.info2 {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.info2 a {
+  width: 40%;
+}
+.lajk {
+  padding-right: 10px;
+  color: #333;
+}
+
+.liked {
+  color: blue;
+}
+
+.plikes {
+  color: blue;
+}
+.plikes:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal button {
+  background-color: #ad343e;
+  padding: 5px 25px;
+  color: white;
+  font-size: 18px;
+  border: #333 1px solid;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
 .modal {
@@ -137,4 +187,17 @@
 
 .modal:empty {
   display: none;
+}
+
+.modal > div {
+  background-color: white;
+  max-width: 500px;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal .buttons button {
+  display: inline-block;
+  margin-right: 15px;
 }

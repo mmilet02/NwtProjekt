@@ -32,6 +32,7 @@ export class TripCard extends Component {
       liked: !this.state.liked
     });
   }
+
   unliked() {
     this.props.removeLike(this.props.trip.id);
     this.setState({
@@ -79,6 +80,16 @@ export class TripCard extends Component {
 
   render() {
     let trip = this.props.trip;
+    let duration = 0;
+    let start_hour = 0;
+    let end_hour = 0;
+    if (this.props.trip.start_hour) {
+      start_hour = this.props.trip.start_hour.slice(16, 21);
+      end_hour = this.props.trip.end_hour.slice(16, 21);
+      const start = start_hour.slice(0, 2);
+      const end = end_hour.slice(0, 2);
+      duration = end - start;
+    }
     return (
       <div key={trip.id} className="tripp">
         <div className="tripImage">
@@ -89,54 +100,56 @@ export class TripCard extends Component {
               alt=""
             />
           </Link>
+          <p className="price">Price : {trip.price} €</p>
         </div>
         <div className="info">
           <div className="info1">
-            <p className="location">{trip.location}</p>
+            <p className="location">{trip.name}</p>
             <p>
               Created by:
               <Link to={"/profile/user/" + trip.UserId}> {trip.createdBy}</Link>
             </p>
           </div>
           <div className="infoFav">
-            <p>Start : {trip.date}</p>
-            <p>Duration : {trip.duration} days</p>
+            <p>Start: {start_hour}</p>
+            <p>Duration: {duration}h</p>
+
+            <p className="plikes" onClick={this.toggleModal}>
+              Likes: {this.props.trip.likes.length}
+            </p>
           </div>
         </div>
-        <div className="noviLajk">
-          <div>
-            <Link to={"/trip/" + trip.id}>
-              <div className="buttonDetails">
-                <p>More details</p>
-              </div>
-            </Link>
-          </div>
-          <div className="thumbs">
-            <div>
-              Liked by
-              <button onClick={this.toggleModal}>
-                {this.props.trip.likes.length}
-              </button>
+        <div className="info2">
+          <Link to={"/trip/" + trip.id}>
+            <div className="buttonDetails">
+              <p>More details</p>
             </div>
-            <i className="fas fa-thumbs-up fa-lg" />
-            {/* {this.state.liked ? (
-              <button disabled={!this.props.isLoggedIn} onClick={this.unliked}>
-                UNLIKE
-              </button>
-            ) : (
-              <button disabled={!this.props.isLoggedIn} onClick={this.liked}>
-                LIKE
-              </button>
-            )} */}
+          </Link>
+          <div className="lajk">
+            {this.props.isLoggedIn ? (
+              this.state.liked ? (
+                <i
+                  className="fas fa-thumbs-up fa-2x liked"
+                  disabled={!this.props.isLoggedIn}
+                  onClick={this.unliked}
+                />
+              ) : (
+                <i
+                  className="fas fa-thumbs-up fa-2x"
+                  disabled={!this.props.isLoggedIn}
+                  onClick={this.liked}
+                />
+              )
+            ) : null}
           </div>
         </div>
         {this.state.show ? (
-          <Modal className="modal">
+          <Modal className="modal" id="modal">
             <div>
-              <button onClick={this.toggleModal}>Close</button>
               {this.state.likes.map(like => (
                 <p>{like.userName}</p>
               ))}
+              <button onClick={this.toggleModal}>Close</button>
             </div>
           </Modal>
         ) : null}

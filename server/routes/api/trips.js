@@ -60,17 +60,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", upload.single("tripImage"), getToken, (req, res) => {
-  console.log(req.file);
   console.log(req.body);
-  let data = ({
-    name,
-    description,
-    start_date,
-    end_date,
-    start_hour,
-    end_hour,
-    location
-  } = req.body);
+  let data = ({ name, description, location, start_hour, end_hour } = req.body);
   if (!!req.file) {
     data = {
       ...data,
@@ -92,7 +83,7 @@ router.post("/", upload.single("tripImage"), getToken, (req, res) => {
   };
   Trip.create(data)
     .then(result => {
-      res.send("200 OK ").json({ result });
+      return res.status(200).json({ result });
     })
     .catch(err => console.log("Error", err));
 });
@@ -115,7 +106,6 @@ router.get("/userTrips/:id", (req, res) => {
 router.post("/like/:id", getToken, (req, res) => {
   const id = req.params.id;
   Trip.findOne({ where: { id: id } }).then(trip => {
-    console.log(trip.dataValues);
     trip.dataValues.likes.push({
       userName: req.user.fullname,
       id: req.user.id,
@@ -139,7 +129,6 @@ router.post("/unlike/:id", getToken, (req, res) => {
     tripUpdate.dataValues.likes = trip.dataValues.likes.filter(likedBy => {
       return likedBy.userName !== req.user.fullname;
     });
-    console.log(tripUpdate.dataValues);
 
     Trip.update(tripUpdate.dataValues, { where: { id: id } })
       .then(updatedTrip => {
@@ -171,8 +160,6 @@ router.post("/comment/:id", getToken, (req, res) => {
 });
 
 router.put("/edit/:id", upload.single("tripImage"), (req, res) => {
-  console.log(req.file);
-  console.log(req.params.id);
   const id = +req.params.id;
   let data = ({
     name,

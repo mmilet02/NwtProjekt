@@ -14,7 +14,6 @@ class UserProfile extends Component {
   componentDidMount() {
     const userID = this.props.match.params.id;
     this.props.fetchUser(userID);
-    this.props.fetchUserTrips(userID);
     if (!this.props.isLoggedIn) {
       return <Redirect to="/login" />;
     }
@@ -31,26 +30,52 @@ class UserProfile extends Component {
     ) {
       return <Redirect to="/profile" />;
     }
-    let userTrips = this.props.userTrips.map(trip => {
-      return (
-        <TripCard key={trip.id} trip={trip} user={this.props.user}></TripCard>
-      );
-    });
+    let trips = [];
+    if (this.props.isLoggedIn) {
+      trips = this.props.trips
+        .filter(trip => {
+          return trip.UserId === +this.props.match.params.id;
+        })
+        .map(trip => {
+          return (
+            <TripCard
+              key={trip.id}
+              trip={trip}
+              user={this.props.user}
+              isLoggedIn={this.props.isLoggedIn}
+            ></TripCard>
+          );
+        });
+    }
     return (
       <div class="userProfile">
         <div>
           {this.props.fetchedUser ? (
-            <div>
-              <h1>{this.props.fetchedUser.fullname} </h1>
-              <h3>Contact: {this.props.fetchedUser.email}</h3>
-              <h4>Member Since {this.props.fetchedUser.createdAt}</h4>
+            <div className="profilInfo">
+              <div className="profilImg">
+                <div className="profilImg1">
+                  <img
+                    src="http://localhost:3000/images/placeimg_640_480_any.jpg"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="profilInfo1">
+                <p>
+                  <b>Name</b>: {this.props.fetchedUser.fullname}
+                </p>
+                <p>
+                  <b>Contact</b>: {this.props.fetchedUser.email}
+                </p>
+              </div>
             </div>
           ) : null}
         </div>
+        <div className="myTripsHeading">
+          <p>{this.props.fetchedUser.fullname} TRIPS</p>
+        </div>
         <div className="tripsContainer">
-          {!!this.props.userTrips[0] ? (
-            <div className="trips">{userTrips}</div>
-          ) : null}
+          {trips[0] ? <div className="trips">{trips}</div> : null}
         </div>
       </div>
     );
@@ -60,11 +85,11 @@ class UserProfile extends Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.userReducer.isLoggedIn,
   user: state.userReducer.user,
-  userTrips: state.tripReducer.userTrips,
-  fetchedUser: state.userReducer.fetchedUser
+  fetchedUser: state.userReducer.fetchedUser,
+  trips: state.tripReducer.trips
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUser, fetchUserTrips }
+  { fetchUser }
 )(UserProfile);

@@ -61,10 +61,11 @@ export class Register extends Component {
     e.preventDefault();
     console.log("submitting register");
     console.log(this.state);
+    this.props.clearningErrors();
+
     const isValid = this.validate();
     if (isValid) {
       this.props.userRegister(this.state);
-      this.props.history.push("/profile");
     }
   }
 
@@ -92,9 +93,7 @@ export class Register extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-              {this.state.fullnameError ? (
-                <p>{this.state.fullnameError}</p>
-              ) : null}
+
               <label>
                 <input
                   className="userInput"
@@ -105,7 +104,6 @@ export class Register extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-              {this.state.emailError ? <p>{this.state.emailError}</p> : null}
 
               <label>
                 <input
@@ -118,14 +116,17 @@ export class Register extends Component {
                 />
               </label>
               {this.state.passwordError ? (
-                <p>{this.state.passwordError}</p>
+                <p style={{ color: "red" }}>{this.state.passwordError}</p>
               ) : null}
-
-              <label>
-                <input className="checkbox" type="checkbox" /> I have read and
-                accept the terms of use
-              </label>
-              {this.props.errorMsg ? <p>{this.props.errorMsg}</p> : null}
+              {this.state.emailError ? (
+                <p style={{ color: "red" }}>{this.state.emailError}</p>
+              ) : null}
+              {this.state.fullnameError ? (
+                <p style={{ color: "red" }}>{this.state.fullnameError}</p>
+              ) : null}
+              {this.props.errorMsg ? (
+                <p style={{ color: "red" }}>{this.props.errorMsg}</p>
+              ) : null}
               <button className="login_button" onClick={this.formSubmit}>
                 REGISTER
               </button>
