@@ -23,10 +23,7 @@ export class TripDetails extends Component {
   }
 
   componentDidMount() {
-    console.log("mounting");
-    console.log(this.props);
     this.props.fetchSingleTrip(this.props.match.params.id);
-
     window.scrollTo(0, 0);
   }
 

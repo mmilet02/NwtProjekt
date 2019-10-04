@@ -31,10 +31,6 @@ export class TripList extends Component {
   }
 
   render() {
-    /* let SortedTrips = this.props.trips.sort((a, b) => {
-      console.log(a);
-      return a.name.toUpperCase() < b.name.toUpperCase();
-    }); */
     let trips = this.props.trips
       .filter(trip => {
         if (
@@ -60,8 +56,6 @@ export class TripList extends Component {
           />
         </div>
         <div className="trips_heading">
-          {/*           <p> TRIPS </p>
-           */}{" "}
           <label className="searchV">
             <input
               name="searchTerm"
@@ -73,14 +67,7 @@ export class TripList extends Component {
         </div>
         <hr />
         <div className="tripsContainer">
-          {!!this.props.trips[0] ? (
-            <div className="trips">{trips}</div>
-          ) : (
-            <div>
-              <h2>NO AVAILABLE TRIPS, CREATE ONE</h2>
-              <CreateTrip />
-            </div>
-          )}
+          <div className="trips">{trips}</div>
         </div>
       </div>
     );

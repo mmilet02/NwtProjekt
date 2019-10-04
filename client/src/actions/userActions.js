@@ -7,7 +7,8 @@ import {
   USER_LOGIN_FAIL,
   USER_REGISTER_FAIL,
   CLEAR_ERRORS,
-  FETCH_USER
+  FETCH_USER,
+  CLEAR_USER
 } from "../constants/actions";
 import axios from "axios";
 
@@ -41,7 +42,6 @@ export const userLogin = body => dispatch => {
   axios
     .post("/api/users/login", body)
     .then(res => {
-      console.log(res.data.token);
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
@@ -51,9 +51,7 @@ export const userLogin = body => dispatch => {
       });
     })
     .catch(err => {
-      console.log("ERROR", err);
       if (err.response) {
-        console.log(err.response.data.msg);
         dispatch({
           type: USER_LOGIN_FAIL,
           payload: err.response.data.msg
@@ -75,7 +73,6 @@ export const userRegister = body => dispatch => {
       });
     })
     .catch(err => {
-      console.log("Auth failed", err);
       if (err.response) {
         dispatch({
           type: USER_REGISTER_FAIL,
@@ -99,12 +96,18 @@ export const fetchUser = id => dispatch => {
       console.log("Failure catching user profile", err.response);
     });
 };
+
+export const clearUser = () => dispatch => {
+  dispatch({
+    type: CLEAR_USER
+  });
+};
+
 export const userLogout = () => dispatch => {
   localStorage.removeItem("token");
   dispatch({
     type: USER_LOGOUT
   });
-  window.location.href = "/";
 };
 
 export const clearningErrors = () => {

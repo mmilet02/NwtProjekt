@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import "./CreateTrip.css";
+import { connect } from "react-redux";
+import { createTrip } from "../../../actions/tripActions";
 import TimePicker from "rc-time-picker";
-import axios from "axios";
 import "rc-time-picker/assets/index.css";
 
 class CreateTrip extends Component {
@@ -92,19 +93,7 @@ class CreateTrip extends Component {
         data.append("tripImage", this.state.tripImage, "tripImage");
       }
       data.append("location", this.state.location);
-      let config = {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token")
-        }
-      };
-      axios
-        .post("/api/trips", data, config)
-        .then(res => {
-          this.props.history.push("/");
-        })
-        .catch(err => {
-          console.log("Error", err);
-        });
+      this.props.createTrip(data);
     } else {
       return;
     }
@@ -214,4 +203,8 @@ class CreateTrip extends Component {
   }
 }
 
-export default withRouter(CreateTrip);
+export default connect(
+  null,
+  { createTrip },
+  withRouter(CreateTrip)
+);

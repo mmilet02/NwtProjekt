@@ -11,14 +11,14 @@ export class Profile extends Component {
   constructor(props) {
     super(props);
   }
+
   componentDidMount() {
-    this.props.fetchTrips();
+    if (this.props.trips.length === 0) {
+      this.props.fetchTrips();
+    }
   }
-
   render() {
-    console.log(this.props);
     let trips = [];
-
     let fullname = "";
     let email = "";
     if (this.props.isLoggedIn) {

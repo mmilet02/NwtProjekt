@@ -1,7 +1,6 @@
 import {
   FETCH_TRIPS,
   FETCH_SINGLE_TRIP,
-  FETCH_USER_TRIPS,
   DELETE_TRIP,
   EDIT_TRIP,
   CLEAR_TRIP,
@@ -13,8 +12,7 @@ import {
 const initialState = {
   trips: [],
   trip: {},
-  comments: [],
-  userTrips: []
+  comments: []
 };
 
 export default function(state = initialState, action) {
@@ -29,11 +27,6 @@ export default function(state = initialState, action) {
         ...state,
         trip: action.payload,
         comments: action.payload.comments
-      };
-    case FETCH_USER_TRIPS:
-      return {
-        ...state,
-        userTrips: action.payload
       };
     case DELETE_TRIP:
       return {

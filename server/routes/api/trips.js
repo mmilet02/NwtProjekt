@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const multer = require("multer");
-const getToken = require("../../middleware/getToken");
+const auth = require("../../middleware/authentication");
 const MIME_TYPE = {
   "image/jpeg": ".jpg",
   "image/jpg": ".jpg",
@@ -23,11 +23,6 @@ const storage = multer.diskStorage({
     ); */
   }
 });
-/*
-file.mimetype === "image/jpeg" ||
-file.mimetype === "image/png" ||
-file.mimetype === "image/jpg" 
-*/
 
 const fileFilter = (req, file, cb) => {
   if (MIME_TYPE[file.mimetype]) {
@@ -36,6 +31,7 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("False type"), false);
   }
 };
+
 //where to store files
 const upload = multer({
   storage: storage,
@@ -43,12 +39,7 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-/* const sequelize = require("sequelize");
- */
 const models = require("../../models/index");
-/* const Trip = require("../../models/trip"); doesn't work, dunno why
- */
-
 const Trip = models.Trip;
 
 router.get("/", (req, res) => {
@@ -56,11 +47,12 @@ router.get("/", (req, res) => {
     .then(trips => {
       res.send(trips);
     })
-    .catch(err => console.log("Error", err));
+    .catch(err => {
+      return res.status(500).json({ msg: "Fetching all trips failed" });
+    });
 });
 
-router.post("/", upload.single("tripImage"), getToken, (req, res) => {
-  console.log(req.body);
+router.post("/", upload.single("tripImage"), auth, (req, res) => {
   let data = ({ name, description, location, start_hour, end_hour } = req.body);
   if (!!req.file) {
     data = {
@@ -68,32 +60,37 @@ router.post("/", upload.single("tripImage"), getToken, (req, res) => {
       image: req.file.path
     };
   }
-  let space = +req.body.space;
-  let createdBy = req.user.fullname;
-  let likes = [];
-  let comments = [];
+  const freespace = +req.body.space;
+  const createdBy = req.user.fullname;
+  const likes = [];
+  const comments = [];
   data = {
     ...data,
-    freespace: space,
+    freespace,
+    createdBy,
+    likes,
+    comments,
     price: +req.body.price,
-    UserId: req.user.id,
-    createdBy: createdBy,
-    likes: likes,
-    comments: comments
+    UserId: req.user.id
   };
   Trip.create(data)
     .then(result => {
-      return res.status(200).json({ result });
+      return res.status(200).json(result);
     })
-    .catch(err => console.log("Error", err));
+    .catch(err => {
+      return res.status(500).json({ msg: "Creating Post Failed" });
+    });
 });
 
 router.get("/show/:id", (req, res) => {
-  console.log(req.param);
-  const id = req.params.id;
-  Trip.findOne({ where: { id: id } }).then(trip => {
-    res.send(trip);
-  });
+  const id = +req.params.id;
+  Trip.findOne({ where: { id: id } })
+    .then(trip => {
+      return res.status(200).json(trip);
+    })
+    .catch(err => {
+      return res.status(500).json({ msg: "Creating Post Failed" });
+    });
 });
 
 router.get("/userTrips/:id", (req, res) => {
@@ -103,7 +100,7 @@ router.get("/userTrips/:id", (req, res) => {
   });
 });
 
-router.post("/like/:id", getToken, (req, res) => {
+router.post("/like/:id", auth, (req, res) => {
   const id = req.params.id;
   Trip.findOne({ where: { id: id } }).then(trip => {
     trip.dataValues.likes.push({
@@ -120,7 +117,7 @@ router.post("/like/:id", getToken, (req, res) => {
   });
 });
 
-router.post("/unlike/:id", getToken, (req, res) => {
+router.post("/unlike/:id", auth, (req, res) => {
   console.log(req.user);
   const id = req.params.id;
   Trip.findOne({ where: { id: id } }).then(trip => {
@@ -138,7 +135,7 @@ router.post("/unlike/:id", getToken, (req, res) => {
   });
 });
 
-router.post("/comment/:id", getToken, (req, res) => {
+router.post("/comment/:id", auth, (req, res) => {
   const id = req.params.id;
   console.log(req.body);
   Trip.findOne({ where: { id: id } }).then(trip => {

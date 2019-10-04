@@ -3,40 +3,18 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const models = require("../../models/index");
-const User = models.User;
-
-const auth = require("../../middleware/getToken");
-
 /* const models = require("../../models/index");
- const Trip = require("../../models/trip"); doesn't work
- const Trip = models.Trip; 
+const User = models.User;
  */
-router.get("/user/:id", (req, res) => {
-  console.log(req.params.id);
-  id = req.params.id;
-  User.findOne({ where: { id: id } })
-    .then(user => {
-      console.log(user);
-      return res.json({
-        user: user
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        msg: "User fetching Error"
-      });
-    });
-});
+const User = require("../../models/index").User;
+const auth = require("../../middleware/authentication");
 
 router.get("/", auth, (req, res) => {
-  console.log(req.user);
   User.findOne({
     where: { email: req.user.email },
     attributes: ["id", "fullname", "createdAt", "updatedAt", "email"]
   })
     .then(user => {
-      console.log("SENT USER", user);
       return res.json({
         user: user
       });
@@ -49,8 +27,22 @@ router.get("/", auth, (req, res) => {
     });
 });
 
+router.get("/user/:id", (req, res) => {
+  id = +req.params.id;
+  User.findOne({ where: { id: id } })
+    .then(user => {
+      return res.json({
+        user
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        msg: "User fetching Error"
+      });
+    });
+});
+
 router.post("/register", (req, res) => {
-  console.log("!");
   const { fullname, email, password } = req.body;
   if (!fullname || !email || !password) {
     return res.status(500).json({
@@ -90,7 +82,7 @@ router.post("/register", (req, res) => {
                   });
                 }
                 return res.json({
-                  user: { ...userSign },
+                  user: userSign,
                   token
                 });
               }
@@ -138,7 +130,7 @@ router.post("/login", (req, res) => {
           return res.json({ msg: "Server error, try again later" });
         }
         return res.json({
-          user: { ...userSign },
+          user: userSign,
           token
         });
       });

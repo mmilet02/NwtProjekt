@@ -144,7 +144,7 @@ export class TripCard extends Component {
           </div>
         </div>
         {this.state.show ? (
-          <Modal className="modal" id="modal">
+          <Modal id="modal">
             <div>
               {this.state.likes.map(like => (
                 <p>{like.userName}</p>

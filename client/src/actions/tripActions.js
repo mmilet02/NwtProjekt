@@ -40,22 +40,18 @@ export const fetchSingleTrip = id => (dispatch, getState) => {
     .catch(err => console.log("Ups, something went wrong", err));
 };
 
-export const fetchUserTrips = id => dispatch => {
+export const createTrip = data => dispatch => {
+  const config = addTokenToHeaders();
   axios
-    .get("/api/trips/userTrips/" + id)
+    .post("/api/trips", data, config)
     .then(res => {
-      dispatch({
-        type: FETCH_USER_TRIPS,
-        payload: res.data
-      });
+      this.props.history.push("/trips");
     })
-    .catch(err =>
-      console.log("Ups, something went wrong with fetching user trips", err)
-    );
+    .catch(err => {
+      console.log("Error", err);
+    });
 };
-
 export const editTrip = (data, id) => dispatch => {
-  console.log(id);
   axios
     .put("/api/trips/edit/" + id, data)
     .then(res => {
@@ -92,11 +88,7 @@ export const clearTrip = () => dispatch => {
 };
 
 export const addComment = (id, comment) => dispatch => {
-  let config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token")
-    }
-  };
+  const config = addTokenToHeaders();
   axios
     .post(
       "/api/trips/comment/" + id,
@@ -118,11 +110,7 @@ export const addComment = (id, comment) => dispatch => {
 };
 
 export const addLike = id => (dispatch, getState) => {
-  let config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token")
-    }
-  };
+  const config = addTokenToHeaders();
   axios
     .post("/api/trips/like/" + id, null, config)
     .then(res => {
@@ -146,23 +134,16 @@ export const addLike = id => (dispatch, getState) => {
 };
 
 export const removeLike = id => (dispatch, getState) => {
-  let config = {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token")
-    }
-  };
+  const config = addTokenToHeaders();
   axios
     .post("/api/trips/unlike/" + id, null, config)
     .then(res => {
-      console.log("LIKING RES", res.data.trip);
-      console.log(getState().tripReducer.trips);
       let newTrips = getState().tripReducer.trips.map(trip => {
         if (trip.id == res.data.trip.id) {
           trip = res.data.trip;
         }
         return trip;
       });
-      console.log(newTrips);
       dispatch({
         type: ADD_LIKE,
         payload: newTrips
@@ -172,3 +153,27 @@ export const removeLike = id => (dispatch, getState) => {
       console.log("Error in LIKING", err);
     });
 };
+
+const addTokenToHeaders = () => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  };
+  return config;
+};
+
+/* 
+export const fetchUserTrips = id => dispatch => {
+  axios
+    .get("/api/trips/userTrips/" + id)
+    .then(res => {
+      dispatch({
+        type: FETCH_USER_TRIPS,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      console.log("Ups, something went wrong with fetching user trips", err)
+    );
+}; */

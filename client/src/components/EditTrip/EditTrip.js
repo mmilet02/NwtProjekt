@@ -25,7 +25,6 @@ class EditTrip extends Component {
       id: this.props.trip.id,
       tripImage: ""
     };
-    console.log(this.props);
     this.handleChange = this.handleChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
@@ -46,7 +45,6 @@ class EditTrip extends Component {
   }
 
   fileChanged = event => {
-    console.log(event.target.files[0]);
     this.setState({
       ...this.state,
       tripImage: event.target.files[0]
@@ -54,8 +52,6 @@ class EditTrip extends Component {
   };
 
   submitForm(e) {
-    console.log(this.props);
-    console.log(this.state.id);
     e.preventDefault();
     let data = new FormData();
     data.append("name", this.state.name);
@@ -64,10 +60,10 @@ class EditTrip extends Component {
     data.append("end_hour", this.state.end_hour);
     data.append("space", this.state.space);
     data.append("price", this.state.price);
+    data.append("location", this.state.location);
     if (this.state.tripImage) {
       data.append("tripImage", this.state.tripImage, "tripImage");
     }
-    data.append("location", this.state.location);
     this.props.editTrip(data, this.state.id);
     // zasto mi ode this.props.trip bude prazan objekt a u constructoru ne
     /*     this.props.history.push("/trips");

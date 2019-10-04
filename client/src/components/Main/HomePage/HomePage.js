@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./HomePage.css";
 import TripCard from "../TripCard/TripCard";
 import { connect } from "react-redux";
@@ -15,7 +14,6 @@ export class HomePage extends Component {
     });
     sortedTrips = sortedTrips.slice(0, 5);
     let trips = sortedTrips.map(trip => {
-      console.log(this.props.user);
       return (
         <TripCard key={trip.id} trip={trip} user={this.props.user}></TripCard>
       );

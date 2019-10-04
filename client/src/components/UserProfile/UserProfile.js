@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchUser } from "../../actions/userActions";
-import { fetchUserTrips } from "../../actions/tripActions";
+import { fetchUser, clearUser } from "../../actions/userActions";
+import { fetchTrips } from "../../actions/tripActions";
 import { Redirect } from "react-router-dom";
 import { TripCard } from "../Main/TripCard/TripCard";
 
@@ -12,23 +12,50 @@ class UserProfile extends Component {
   componentWillMount() {}
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     const userID = this.props.match.params.id;
     this.props.fetchUser(userID);
     if (!this.props.isLoggedIn) {
-      return <Redirect to="/login" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: this.props.location }
+          }}
+        />
+      );
+    }
+    if (this.props.trips.length < 1) {
+      this.props.fetchTrips();
     }
   }
 
+  componentWillUnmount() {
+    this.props.clearUser();
+  }
   render() {
-    console.log("props inc", this.props);
     if (!this.props.isLoggedIn) {
-      return <Redirect to="/login" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: this.props.location }
+          }}
+        />
+      );
     }
     if (
       this.props.isLoggedIn &&
       this.props.user.id === +this.props.match.params.id
     ) {
-      return <Redirect to="/profile" />;
+      return (
+        <Redirect
+          to={{
+            pathname: "/profile",
+            state: { from: this.props.location }
+          }}
+        />
+      );
     }
     let trips = [];
     if (this.props.isLoggedIn) {
@@ -46,6 +73,7 @@ class UserProfile extends Component {
             ></TripCard>
           );
         });
+      console.log(this.props.fetchedUser);
     }
     return (
       <div class="userProfile">
@@ -91,5 +119,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchUser }
+  { fetchUser, clearUser, fetchTrips }
 )(UserProfile);

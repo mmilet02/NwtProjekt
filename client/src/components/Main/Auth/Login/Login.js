@@ -43,16 +43,11 @@ export class Login extends Component {
       });
       return false;
     }
-    this.setState(
-      {
-        ...this.state,
-        emailError: "",
-        passwordError: ""
-      },
-      () => {
-        return true;
-      }
-    );
+    this.setState({
+      ...this.state,
+      emailError: "",
+      passwordError: ""
+    });
     return true;
   }
   componentDidMount() {
@@ -75,7 +70,12 @@ export class Login extends Component {
     }
   }
   render() {
-    if (this.props.isLoggedIn) {
+    if (this.props.history.action === "REPLACE" && this.props.isLoggedIn) {
+      console.log("inside if");
+      let path = this.props.location.state.from.pathname;
+      console.log("redirect to ", path);
+      return <Redirect to={path} />;
+    } else if (this.props.isLoggedIn) {
       return <Redirect to="/profile" />;
     }
     return (

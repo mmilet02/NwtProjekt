@@ -7,7 +7,8 @@ import {
   USER_LOADED_FAIL,
   USER_LOGOUT,
   CLEAR_ERRORS,
-  FETCH_USER
+  FETCH_USER,
+  CLEAR_USER
 } from "../constants/actions";
 
 const initialState = {
@@ -57,6 +58,12 @@ export default function(state = initialState, action) {
         isLoggedIn: false,
         user: null
       };
+    case CLEAR_USER: {
+      return {
+        ...state,
+        fetchedUser: {}
+      };
+    }
     case CLEAR_ERRORS:
       return {
         ...state,

@@ -17,41 +17,9 @@ class Navbar extends Component {
   }
 
   render() {
-    console.log("CGnsdnsdnsdn", this.props);
     const { user, isLoggedIn } = this.props;
-    console.log("USERR", user);
     return (
       <header className="second_header">
-        {/* <div className="firstHeaderPart">
-          <div>
-            {isLoggedIn ? (
-              <div className="ifLogin">
-                <div>
-                  <Link to="/favorite">
-                    <i className="fas fa-heart fa-lg" />
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/createTrip">
-                    <i className="fas fa-plus fa-lg" />
-                  </Link>
-                </div>
-                <Link to="/profile">Profile - {user.fullname}</Link>
-                <div onClick={this.logout}>Logout</div>
-              </div>
-            ) : (
-              <div className="ifLogin">
-                <div>
-                  <Link to="/login">Login</Link>
-                </div>
-                <div>
-                  <Link to="/register">Register</Link>
-                </div>
-              </div>
-            )}
-          </div>
-        </div> */}
-
         <div className="secondHeaderPart">
           <div className="logo">
             <Link to="/">
