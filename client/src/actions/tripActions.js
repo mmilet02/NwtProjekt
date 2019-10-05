@@ -40,35 +40,34 @@ export const fetchSingleTrip = id => (dispatch, getState) => {
     .catch(err => console.log("Ups, something went wrong", err));
 };
 
-export const createTrip = data => dispatch => {
+export const createTrip = (data, history) => {
   const config = addTokenToHeaders();
   axios
     .post("/api/trips", data, config)
     .then(res => {
-      this.props.history.push("/trips");
-    })
-    .catch(err => {
-      console.log("Error", err);
-    });
-};
-export const editTrip = (data, id) => dispatch => {
-  axios
-    .put("/api/trips/edit/" + id, data)
-    .then(res => {
-      console.log("Success");
-      console.log(res);
-      dispatch({
-        type: EDIT_TRIP,
-        payload: data
-      });
-      window.location.href = "/trips";
+      history.push("/trips");
     })
     .catch(err => {
       console.log("Error", err);
     });
 };
 
-export const deleteTrip = id => dispatch => {
+export const editTrip = (data, id, history) => dispatch => {
+  axios
+    .put("/api/trips/edit/" + id, data)
+    .then(res => {
+      dispatch({
+        type: EDIT_TRIP,
+        payload: data
+      });
+      history.push("/trip/" + id);
+    })
+    .catch(err => {
+      console.log("Error", err);
+    });
+};
+
+export const deleteTrip = (id, history) => dispatch => {
   axios
     .delete("/api/trips/delete/" + id)
     .then(res => {
@@ -76,7 +75,7 @@ export const deleteTrip = id => dispatch => {
         type: DELETE_TRIP,
         payload: id
       });
-      window.location.href = "/trips";
+      history.push("/profile");
     })
     .catch(err => console.log("Ups, something went wrong", err));
 };

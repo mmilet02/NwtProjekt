@@ -64,10 +64,8 @@ class EditTrip extends Component {
     if (this.state.tripImage) {
       data.append("tripImage", this.state.tripImage, "tripImage");
     }
-    this.props.editTrip(data, this.state.id);
+    this.props.editTrip(data, this.state.id, this.props.history);
     // zasto mi ode this.props.trip bude prazan objekt a u constructoru ne
-    /*     this.props.history.push("/trips");
-     */
   }
 
   render() {

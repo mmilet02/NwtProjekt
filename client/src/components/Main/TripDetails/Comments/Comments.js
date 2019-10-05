@@ -26,12 +26,17 @@ function Comments(props) {
         <form onSubmit={props.onSubmit}>
           <div className="komentar">
             <textarea
+              disabled={!props.isLoggedIn}
               className="text_area2"
               onChange={props.handleChange}
               value={props.comment}
-              placeholder="Write a comment..."
+              placeholder={
+                !props.isLoggedIn ? "Logg In To Comment" : "Write a comment..."
+              }
             ></textarea>
-            <button className="bookNow">Submit comment</button>
+            <button disabled={!props.isLoggedIn} className="bookNow">
+              Submit comment
+            </button>
           </div>
         </form>
       ) : (

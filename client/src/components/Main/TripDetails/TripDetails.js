@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TripDetails.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import {
   fetchSingleTrip,
   deleteTrip,
@@ -29,7 +30,7 @@ export class TripDetails extends Component {
 
   deleteTrip(event) {
     event.preventDefault();
-    this.props.deleteTrip(this.props.trip.id);
+    this.props.deleteTrip(this.props.trip.id, this.props.history);
   }
 
   componentWillUnmount() {
@@ -141,6 +142,7 @@ export class TripDetails extends Component {
           onSubmit={this.onSubmit}
           handleChange={this.handleChange}
           comment={this.state.comment}
+          isLoggedIn={this.props.isLoggedIn}
         />
       </div>
     );
@@ -157,4 +159,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { fetchSingleTrip, deleteTrip, clearTrip, addComment }
-)(TripDetails);
+)(withRouter(TripDetails));

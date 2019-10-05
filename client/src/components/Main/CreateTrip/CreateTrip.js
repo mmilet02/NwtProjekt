@@ -93,7 +93,7 @@ class CreateTrip extends Component {
         data.append("tripImage", this.state.tripImage, "tripImage");
       }
       data.append("location", this.state.location);
-      this.props.createTrip(data);
+      this.props.createTrip(data, this.props.history);
     } else {
       return;
     }
@@ -205,6 +205,5 @@ class CreateTrip extends Component {
 
 export default connect(
   null,
-  { createTrip },
-  withRouter(CreateTrip)
-);
+  { createTrip }
+)(withRouter(CreateTrip));
