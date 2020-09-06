@@ -12,7 +12,7 @@ export class Login extends Component {
       email: "",
       password: "",
       emailError: "",
-      passwordError: ""
+      passwordError: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
@@ -22,7 +22,7 @@ export class Login extends Component {
     const { value, name } = e.target;
     this.setState({
       ...this.state,
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -31,7 +31,7 @@ export class Login extends Component {
       this.setState({
         ...this.state,
         emailError: "Email must include @",
-        loading: false
+        loading: false,
       });
       return false;
     } else if (this.state.password.length < 5) {
@@ -39,19 +39,22 @@ export class Login extends Component {
         ...this.state,
         emailError: "",
         passwordError: "Password needs to be atleast 6 characters long",
-        loading: false
+        loading: false,
       });
       return false;
     }
     this.setState({
       ...this.state,
       emailError: "",
-      passwordError: ""
+      passwordError: "",
     });
     return true;
   }
   componentDidMount() {
     this.props.clearningErrors();
+  }
+  componentWillMount() {
+    console.log("WILLMOUNT LOGINJS", this.props.isLoggedIn);
   }
 
   formSubmit(e) {
@@ -65,14 +68,16 @@ export class Login extends Component {
       this.setState({
         ...this.state,
         loading: false,
-        passwordError: ""
+        passwordError: "",
       });
     }
   }
   render() {
     if (this.props.history.action === "REPLACE" && this.props.isLoggedIn) {
       console.log("inside if");
-      let path = this.props.location.state.from.pathname;
+      let path = this.props.location.state.from;
+      console.log("INSIDE IF  WTF", this.props);
+
       console.log("redirect to ", path);
       return <Redirect to={path} />;
     } else if (this.props.isLoggedIn) {
@@ -130,12 +135,11 @@ export class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   errorMsg: state.userReducer.errorMsg,
-  isLoggedIn: state.userReducer.isLoggedIn
+  isLoggedIn: state.userReducer.isLoggedIn,
 });
 
-export default connect(
-  mapStateToProps,
-  { userLogin, clearningErrors }
-)(withRouter(Login));
+export default connect(mapStateToProps, { userLogin, clearningErrors })(
+  withRouter(Login)
+);

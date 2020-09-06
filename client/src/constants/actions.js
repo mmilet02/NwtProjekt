@@ -1,3 +1,4 @@
+export const START_FETCHING = "START_FETCHING";
 export const FETCH_TRIPS = "FETCH_TRIPS";
 export const FETCH_SINGLE_TRIP = "FETCH_SINGLE_TRIP";
 export const FETCH_USER_TRIPS = "FETCH_USER_TRIPS";

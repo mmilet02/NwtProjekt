@@ -12,17 +12,17 @@ const auth = require("../../middleware/authentication");
 router.get("/", auth, (req, res) => {
   User.findOne({
     where: { email: req.user.email },
-    attributes: ["id", "fullname", "createdAt", "updatedAt", "email"]
+    attributes: ["id", "fullname", "createdAt", "updatedAt", "email"],
   })
-    .then(user => {
+    .then((user) => {
       return res.json({
-        user: user
+        user: user,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       return res.status(500).json({
-        msg: "User not found"
+        msg: "User not found",
       });
     });
 });
@@ -30,14 +30,15 @@ router.get("/", auth, (req, res) => {
 router.get("/user/:id", (req, res) => {
   id = +req.params.id;
   User.findOne({ where: { id: id } })
-    .then(user => {
+    .then((user) => {
+      console.log("USER SERVER", user);
       return res.json({
-        user
+        user,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({
-        msg: "User fetching Error"
+        msg: "User fetching Error",
       });
     });
 });
@@ -46,13 +47,13 @@ router.post("/register", (req, res) => {
   const { fullname, email, password } = req.body;
   if (!fullname || !email || !password) {
     return res.status(500).json({
-      msg: "All fields required"
+      msg: "All fields required",
     });
   }
-  User.findOne({ where: { email: email } }).then(user => {
+  User.findOne({ where: { email: email } }).then((user) => {
     if (user) {
       return res.status(500).json({
-        msg: "Email already in use"
+        msg: "Email already in use",
       });
     }
     bcrypt.genSalt(10, (err, salt) => {
@@ -60,16 +61,16 @@ router.post("/register", (req, res) => {
       bcrypt.hash(password, salt, (err, hashedPassword) => {
         if (err) {
           return res.status(500).json({
-            msg: "Server Error, please try again later"
+            msg: "Server Error, please try again later",
           });
         }
         const newUser = { fullname, password: hashedPassword, email };
         User.create(newUser)
-          .then(user => {
+          .then((user) => {
             const userSign = {
               fullname: user.fullname,
               email: user.email,
-              id: user.id
+              id: user.id,
             };
             jwt.sign(
               userSign,
@@ -78,20 +79,20 @@ router.post("/register", (req, res) => {
               (err, token) => {
                 if (err) {
                   return res.status(500).json({
-                    msg: "Server error, try again later"
+                    msg: "Server error, try again later",
                   });
                 }
                 return res.json({
                   user: userSign,
-                  token
+                  token,
                 });
               }
             );
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             return res.status(500).json({
-              msg: "Server error - User not created, try again later"
+              msg: "Server error - User not created, try again later",
             });
           });
       });
@@ -104,23 +105,23 @@ router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(500).json({
-      msg: "Enter all fields"
+      msg: "Enter all fields",
     });
   }
-  User.findOne({ where: { email: email } }).then(user => {
+  User.findOne({ where: { email: email } }).then((user) => {
     if (!user) {
       return res.status(500).json({
-        msg: "Invalid username or password"
+        msg: "Invalid username or password",
       });
     }
-    bcrypt.compare(password, user.password).then(success => {
+    bcrypt.compare(password, user.password).then((success) => {
       if (!success) {
         return res.status(500).json({ msg: "Invalid username or password" });
       }
       const userSign = {
         fullname: user.fullname,
         email: user.email,
-        id: user.id
+        id: user.id,
       };
       jwt.sign(userSign, "bigSecret", { expiresIn: 3600 }, (err, token) => {
         if (err) {
@@ -131,7 +132,7 @@ router.post("/login", (req, res) => {
         }
         return res.json({
           user: userSign,
-          token
+          token,
         });
       });
     });

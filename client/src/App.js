@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
@@ -19,11 +19,15 @@ import store from "./store/store";
 import { userLoaded } from "./actions/userActions";
 
 class App extends Component {
-  componentDidMount() {
+  componentWillMount() {
+    console.log("will mount");
+    store.dispatch(userLoaded());
+  }
+  /* componentDidMount() {
     store.dispatch(userLoaded());
 
     console.log("app MOUNTED");
-  }
+  } */
   render() {
     return (
       <Router>

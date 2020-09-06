@@ -4,7 +4,7 @@ import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
   tripReducer,
-  userReducer
+  userReducer,
 });
 
 export default rootReducer;

@@ -6,58 +6,67 @@ import {
   CLEAR_TRIP,
   ADD_COMMENT,
   ADD_LIKE,
-  REMOVE_LIKE
+  REMOVE_LIKE,
+  START_FETCHING,
 } from "../constants/actions";
 
 const initialState = {
   trips: [],
   trip: {},
-  comments: []
+  comments: [],
+  isFetching: true,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
+    case START_FETCHING:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case FETCH_TRIPS:
       return {
         ...state,
-        trips: action.payload
+        trips: action.payload,
+        isFetching: false,
       };
     case FETCH_SINGLE_TRIP:
       return {
         ...state,
         trip: action.payload,
-        comments: action.payload.comments
+        comments: action.payload.comments,
+        isFetching: false,
       };
     case DELETE_TRIP:
       return {
         ...state,
-        trips: state.trips.filter(trip => trip.id !== action.payload)
+        trips: state.trips.filter((trip) => trip.id !== action.payload),
       };
     case EDIT_TRIP:
       return {
         ...state,
-        trip: action.payload
+        trip: action.payload,
       };
     case CLEAR_TRIP:
       return {
         ...state,
         trip: {},
-        comments: []
+        comments: [],
       };
     case ADD_COMMENT:
       return {
         ...state,
-        comments: [...state.comments, action.payload]
+        comments: [...state.comments, action.payload],
       };
     case ADD_LIKE:
       return {
         ...state,
-        trips: action.payload
+        trips: action.payload,
       };
     case REMOVE_LIKE:
       return {
         ...state,
-        trips: action.payload
+        trips: action.payload,
       };
     default:
       return state;

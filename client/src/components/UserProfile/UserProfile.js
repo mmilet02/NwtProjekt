@@ -1,123 +1,134 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchUser, clearUser } from "../../actions/userActions";
 import { fetchTrips } from "../../actions/tripActions";
-import { Redirect } from "react-router-dom";
+import { Redirect, useParams, useHistory, useLocation } from "react-router-dom";
 import { TripCard } from "../Main/TripCard/TripCard";
 
-class UserProfile extends Component {
-  /*  state = {
-    loading: true
-  }; */
-  componentWillMount() {}
+const UserProfile = (props) => {
+  console.log(props);
+  // const [Loading, setLoading] = useState(true);
+  const isFetching = useSelector((state) => state.tripReducer.isFetching);
+  const isLoggedIn = useSelector((state) => state.userReducer.isLoggedIn);
+  const user = useSelector((state) => state.userReducer.user);
+  const fetchedUser = useSelector((state) => state.userReducer.fetchedUser);
+  const trips = useSelector((state) => state.tripReducer.trips);
+  const userID = +useParams().id;
+  const location = useLocation();
+  const dispatch = useDispatch();
 
-  componentDidMount() {
+  useEffect(() => {
     window.scrollTo(0, 0);
-    const userID = this.props.match.params.id;
-    this.props.fetchUser(userID);
-    if (!this.props.isLoggedIn) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: this.props.location }
-          }}
-        />
-      );
+    dispatch(fetchUser(userID));
+    if (trips.length < 1) {
+      dispatch(fetchTrips());
     }
-    if (this.props.trips.length < 1) {
-      this.props.fetchTrips();
-    }
+    return () => {
+      clearUser();
+    };
+  }, fetchedUser);
+
+  console.log("BEFORE IF", isLoggedIn);
+  if (!isLoggedIn && !isFetching) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: { from: location.pathname },
+        }}
+      />
+    );
+  } else if (isLoggedIn && user.id === userID && !isFetching) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/profile",
+          state: { from: location.pathname },
+        }}
+      />
+    );
   }
 
-  componentWillUnmount() {
-    this.props.clearUser();
+  let filteredTrips = [];
+  // instead of filtering user trips like this -> since with large amount of data it is bad, we
+  // make an endpoint for certain user trips at backend and fetch them that way
+  if (isLoggedIn && !isFetching) {
+    filteredTrips = trips
+      .filter((trip) => {
+        return trip.UserId === userID;
+      })
+      .map((trip) => {
+        return (
+          <TripCard
+            key={trip.id}
+            trip={trip}
+            user={user}
+            isLoggedIn={isLoggedIn}
+          ></TripCard>
+        );
+      });
   }
-  render() {
-    if (!this.props.isLoggedIn) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: this.props.location }
-          }}
-        />
-      );
-    }
-    if (
-      this.props.isLoggedIn &&
-      this.props.user.id === +this.props.match.params.id
-    ) {
-      return (
-        <Redirect
-          to={{
-            pathname: "/profile",
-            state: { from: this.props.location }
-          }}
-        />
-      );
-    }
-    let trips = [];
-    if (this.props.isLoggedIn) {
-      trips = this.props.trips
-        .filter(trip => {
-          return trip.UserId === +this.props.match.params.id;
-        })
-        .map(trip => {
-          return (
-            <TripCard
-              key={trip.id}
-              trip={trip}
-              user={this.props.user}
-              isLoggedIn={this.props.isLoggedIn}
-            ></TripCard>
-          );
-        });
-      console.log(this.props.fetchedUser);
-    }
-    return (
-      <div class="userProfile">
-        <div>
-          {this.props.fetchedUser ? (
-            <div className="profilInfo">
-              <div className="profilImg">
-                <div className="profilImg1">
-                  <img
-                    src="http://localhost:3000/images/placeimg_640_480_any.jpg"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className="profilInfo1">
-                <p>
-                  <b>Name</b>: {this.props.fetchedUser.fullname}
-                </p>
-                <p>
-                  <b>Contact</b>: {this.props.fetchedUser.email}
-                </p>
-              </div>
-            </div>
-          ) : null}
+  console.log("lol2", fetchedUser);
+
+  let fetchedUserTrips = <div>Loading comp or sth component</div>;
+  if (!!fetchedUser && !isFetching) {
+    fetchedUserTrips = (
+      <div className="profilInfo">
+        <div className="profilImg">
+          <div className="profilImg1">
+            <img
+              src="http://localhost:3000/images/placeimg_640_480_any.jpg"
+              alt=""
+            />
+          </div>
         </div>
-        <div className="myTripsHeading">
-          <p>{this.props.fetchedUser.fullname} TRIPS</p>
-        </div>
-        <div className="tripsContainer">
-          {trips[0] ? <div className="trips">{trips}</div> : null}
+        <div className="profilInfo1">
+          <p>
+            <b>Name</b>: {fetchedUser.fullname}
+          </p>
+          <p>
+            <b>Contact</b>: {fetchedUser.email}
+          </p>
         </div>
       </div>
     );
   }
-}
+  return (
+    <div class="userProfile">
+      {fetchedUserTrips}
+      <div className="myTripsHeading">
+        <p>{fetchedUser.fullname} TRIPS</p>
+      </div>
+      <div className="tripsContainer">
+        <div>{filteredTrips}</div>
+      </div>
+    </div>
+  );
+};
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.userReducer.isLoggedIn,
-  user: state.userReducer.user,
-  fetchedUser: state.userReducer.fetchedUser,
-  trips: state.tripReducer.trips
-});
+export default UserProfile;
+/* {trips[0] ? <div className="trips">{trips}</div> : null}
+ */
 
-export default connect(
-  mapStateToProps,
-  { fetchUser, clearUser, fetchTrips }
-)(UserProfile);
+/* <div>
+        {!!fetchedUser ? (
+          <div className="profilInfo">
+            <div className="profilImg">
+              <div className="profilImg1">
+                <img
+                  src="http://localhost:3000/images/placeimg_640_480_any.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="profilInfo1">
+              <p>
+                <b>Name</b>: {fetchedUser.fullname}
+              </p>
+              <p>
+                <b>Contact</b>: {fetchedUser.email}
+              </p>
+            </div>
+          </div>
+        ) : null}
+      </div> */
